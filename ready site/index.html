@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <link rel="icon" href="%PUBLIC_URL%/favicon.ico" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">">
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="theme-color" content="#000000" />
+    <meta
+      name="description"
+      content="Web site created using create-react-app"
+    />
+  </head>
+  <body>
+    <noscript>You need to enable JavaScript to run this app.</noscript>
+  <!-- navbar -->
+    <div id="root">
+      <header id='header' class='fixed-top'>
+        <nav class='navbar navbar-expand-lg navbar-dark' style="background-color: coral;">
+          <div class='container'>
+            <a href='#' class='navbar-brand'>Recipes</a>
+            <button class='navbar-toggler' type='button' data-bs-toggle='collapse' data-bs-target='#navContent'
+            aria-controls='navContent' aria-expanded='false' aria-label='Toggle navigation'>
+              <span class='navbar-toggler-icon'></span>
+            </button>
+              <div class='collapse navbar-collapse' id='navContent'>
+              <ul class='navbar-nav me-auto mb-3 mb-lg-0'>
+                <li class='nav-item'>
+                  <a href='#' class='nav-link'>Home</a>
+                </li>
+                <li class='nav-item'>
+                  <a href='#' class='nav-link'>Home2</a>
+                </li>
+                <li class='nav-item'>
+                  <a href='#' class='nav-link'>Home3</a>
+                </li>
+                <li class='nav-item'>
+                  <a href='#' class='nav-link'>Home4</a>
+                </li>
+                <li class='nav-item dropdown'>
+                  <a href='#' class='nav-link dropdown-toggle' id='button' data-bs-toggle='dropdown' aria-expanded='false'>Dropdown</a>
+                  <ul class='dropdown-menu' aria-labelledby='navDrop'>
+                    <li><a href='' class='dropdown-item'>Drop</a></li>
+                    <li><a href='' class='dropdown-item'>Drop</a></li>
+                    <li><a href='' class='dropdown-item'>Drop</a></li>
+                    <li><a href='' class='dropdown-item'>Drop</a></li>
+                  </ul>
+                  <li class='nav-item signUp'>
+                    <a href='#' class='nav-link'>Sign up/</a>
+                  </li>
+                  <li class='nav-item login'>
+                    <a href='#' class='nav-link'>Login</a>
+                  </li>
+                </li>
+              </ul>
+              <form action='#' class='d-flex'>
+                <input type='search' placeholder='Search' class='form-control me-2'>
+                <button type='submit' class='btn-outline-dark'>Search</button>
+              </form>
+          </div>
+          </div>
+        </nav>
+      </header>
+    </div>
+    
+      <section id='hero' class='d-flex align-items-center justify-content-center'>
+        <div class='container text-center'>
+          <div class='row justify-content-center'>
+            <div class='col-md-6 col-lg-8'>
+              <h1>Lorem ipsum dolor sit amet.</h1>
+              <h2>Lorem ipsum dolor sit amet consectetur adipisicing elit. Ad, reiciendis.</h2>
+            </div>
+          </div>
+          <div class='row mt-5 justify-content-center'>
+            <div class='col-xl-2 col-md-4 col-6'>
+              <div class='icon-box'>
+                <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" fill="currentColor" class="bi bi-emoji-heart-eyes" viewBox="0 0 16 16">
+                  <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"/>
+                  <path d="M11.315 10.014a.5.5 0 0 1 .548.736A4.498 4.498 0 0 1 7.965 13a4.498 4.498 0 0 1-3.898-2.25.5.5 0 0 1 .548-.736h.005l.017.005.067.015.252.055c.215.046.515.108.857.169.693.124 1.522.242 2.152.242.63 0 1.46-.118 2.152-.242a26.58 26.58 0 0 0 1.109-.224l.067-.015.017-.004.005-.002zM4.756 4.566c.763-1.424 4.02-.12.952 3.434-4.496-1.596-2.35-4.298-.952-3.434zm6.488 0c1.398-.864 3.544 1.838-.952 3.434-3.067-3.554.19-4.858.952-3.434z"/>
+                </svg>
+                <h3><a href='#'>Lorem, ipsum.</a></h3>
+                </svg>
+              </div>
+            </div>
+            <div class='col-xl-2 col-md-4 col-6'>
+              <div class='icon-box'>
+                <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" fill="currentColor" class="bi bi-emoji-heart-eyes" viewBox="0 0 16 16">
+                  <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"/>
+                  <path d="M11.315 10.014a.5.5 0 0 1 .548.736A4.498 4.498 0 0 1 7.965 13a4.498 4.498 0 0 1-3.898-2.25.5.5 0 0 1 .548-.736h.005l.017.005.067.015.252.055c.215.046.515.108.857.169.693.124 1.522.242 2.152.242.63 0 1.46-.118 2.152-.242a26.58 26.58 0 0 0 1.109-.224l.067-.015.017-.004.005-.002zM4.756 4.566c.763-1.424 4.02-.12.952 3.434-4.496-1.596-2.35-4.298-.952-3.434zm6.488 0c1.398-.864 3.544 1.838-.952 3.434-3.067-3.554.19-4.858.952-3.434z"/>
+                </svg>
+                <h3><a href='#'>Lorem, ipsum.</a></h3>
+                </svg>
+              </div>
+            </div>
+            <div class='col-xl-2 col-md-4 col-6'>
+              <div class='icon-box'>
+                <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" fill="currentColor" class="bi bi-emoji-heart-eyes" viewBox="0 0 16 16">
+                  <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"/>
+                  <path d="M11.315 10.014a.5.5 0 0 1 .548.736A4.498 4.498 0 0 1 7.965 13a4.498 4.498 0 0 1-3.898-2.25.5.5 0 0 1 .548-.736h.005l.017.005.067.015.252.055c.215.046.515.108.857.169.693.124 1.522.242 2.152.242.63 0 1.46-.118 2.152-.242a26.58 26.58 0 0 0 1.109-.224l.067-.015.017-.004.005-.002zM4.756 4.566c.763-1.424 4.02-.12.952 3.434-4.496-1.596-2.35-4.298-.952-3.434zm6.488 0c1.398-.864 3.544 1.838-.952 3.434-3.067-3.554.19-4.858.952-3.434z"/>
+                </svg>
+                <h3><a href='#'>Lorem, ipsum.</a></h3>
+                </svg>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+      <section class='about my-5' id='about'>
+        <div class='container'>
+          <div class='row'>
+            <div class='col-lg-6 order-1 order-lg-2'>
+              <img class='img-fluid' src='https://images.pexels.com/photos/1234535/pexels-photo-1234535.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500'>
+            </div>
+            <div class='col-lg-6 pt-5 pt-lg-0 order-2 order-lg-1 content'>
+              <h3>Lorem ipsum dolor sit amet.</h3>
+              <p class='font-italic'>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Incidunt harum tenetur ipsa aut. Fugiat deserunt enim, ex est voluptate quasi!</p>
+              <ul>
+                <li><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="green" class="bi bi-check-lg" viewBox="0 0 16 16">
+                  <path d="M13.485 1.431a1.473 1.473 0 0 1 2.104 2.062l-7.84 9.801a1.473 1.473 0 0 1-2.12.04L.431 8.138a1.473 1.473 0 0 1 2.084-2.083l4.111 4.112 6.82-8.69a.486.486 0 0 1 .04-.045z"/>
+                </svg> Lorem ipsum dolor sit amet consectetur adipisicing elit. In nihil vel aliquid ipsum dolorum. Quo.</li>
+                <li><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="green" class="bi bi-check-lg" viewBox="0 0 16 16">
+                  <path d="M13.485 1.431a1.473 1.473 0 0 1 2.104 2.062l-7.84 9.801a1.473 1.473 0 0 1-2.12.04L.431 8.138a1.473 1.473 0 0 1 2.084-2.083l4.111 4.112 6.82-8.69a.486.486 0 0 1 .04-.045z"/>
+                </svg> Lorem, ipsum dolor sit amet consectetur adipisicing elit. Eaque, officia?.</li>
+                <li><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="green" class="bi bi-check-lg" viewBox="0 0 16 16">
+                  <path d="M13.485 1.431a1.473 1.473 0 0 1 2.104 2.062l-7.84 9.801a1.473 1.473 0 0 1-2.12.04L.431 8.138a1.473 1.473 0 0 1 2.084-2.083l4.111 4.112 6.82-8.69a.486.486 0 0 1 .04-.045z"/>
+                </svg> Lorem ipsum dolor sit amet.</li>
+                <li><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="green" class="bi bi-check-lg" viewBox="0 0 16 16">
+                  <path d="M13.485 1.431a1.473 1.473 0 0 1 2.104 2.062l-7.84 9.801a1.473 1.473 0 0 1-2.12.04L.431 8.138a1.473 1.473 0 0 1 2.084-2.083l4.111 4.112 6.82-8.69a.486.486 0 0 1 .04-.045z"/>
+                </svg> Lorem ipsum, dolor sit amet consectetur adipisicing elit. Expedita ex explicabo enim reprehenderit perferendis corrupti eveniet voluptatum quidem alias nemo!</li>
+                <li><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="green" class="bi bi-check-lg" viewBox="0 0 16 16">
+                  <path d="M13.485 1.431a1.473 1.473 0 0 1 2.104 2.062l-7.84 9.801a1.473 1.473 0 0 1-2.12.04L.431 8.138a1.473 1.473 0 0 1 2.084-2.083l4.111 4.112 6.82-8.69a.486.486 0 0 1 .04-.045z"/>
+                </svg> Lorem ipsum dolor sit amet consectetur adipisicing elit. In nihil vel aliquid ipsum dolorum. Quo.</li>
+              </ul>
+              <p> Lorem ipsum dolor sit amet, consectetur adipisicing elit. Dolores facere inventore voluptate fugiat iusto? Accusamus explicabo dolor reiciendis quas molestias voluptas delectus consectetur! Suscipit tenetur similique officiis minus eveniet voluptate?</p>
+            </div>
+          </div>
+        </div>
+      </section>
+      <section class='cta mb-5'>
+        <div class='container text-center'>
+          <h3>Call to action</h3>
+          <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Vero libero cupiditate eveniet labore, voluptatibus necessitatibus!</p>
+          <a href='#' class='cta-btn'>Call to action</a>
+        </div>
+      </section>
+      <div class='carousel slide m-5' data-ride='carousel' id='dataCarousel'>
+        <ol class='carousel-indicators'>
+          <li data-bs-target='#dataCarousel' data-slide-to='0' class='active'></li>
+          <li data-bs-target='#dataCarousel' data-slide-to='1'></li>
+        </ol>
+      </div>
+    <link rel="stylesheet" href="style.css">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+  </body>
+</html>
