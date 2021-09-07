@@ -8,7 +8,9 @@ import SearchIngredient from '../SearchIngredient/SearchIngredient';
 import SearchResults from '../SearchResults/SearchResults';
 import Recipe from '../Recipe/Recipe';
 import NewRecipe from '../NewRecipe/NewRecipe';
-import {BrowserRouter, Route} from 'react-router-dom'
+import { BrowserRouter, Route } from 'react-router-dom'
+import { store } from '../../helpers/store'
+import { Provider } from 'react-redux'
 
 class App extends React.Component {
   state = {
@@ -33,7 +35,7 @@ class App extends React.Component {
 
   render () {
     return (
-      <>
+      <Provider store={store}>
         <BrowserRouter>
           <div className="App">
             <AppHeader/>
@@ -51,7 +53,7 @@ class App extends React.Component {
             </section>
           </div>
         </BrowserRouter>
-      </>
+      </Provider>
     )
   }
 }
