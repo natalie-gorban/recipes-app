@@ -1,0 +1,43 @@
+#hero {
+  width: 100%;
+  height: 100vh;
+  background: url(https://images.pexels.com/photos/616404/pexels-photo-616404.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940) fixed top center;
+  background-size: cover;
+  position: relative;
+}
+
+#hero .container {
+  position: relative;
+  padding-top: 75px;
+}
+
+#hero h1 {
+  margin: 0;
+  font-size: 56px;
+  font-weight: 700;
+  line-height: 64px;
+  color: #fff;
+  font-family: 'Poppins', sans-serif;
+}
+
+#hero h2 {
+  color: #fff;
+  margin: 10px 0 0 0;
+  font-size:24px ;
+}
+
+#hero .icon-box h3 {
+  font-weight: 700;
+  margin-top: 10px;
+  font-size: 20px;
+  line-height: 26px;
+}
+
+#hero .icon-box h3 a {
+  color:mediumblue;
+}
+
+#hero .icon-box h3 a:hover {
+  color: black;
+}
+

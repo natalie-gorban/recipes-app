@@ -5,7 +5,7 @@ import { Navbar, Nav, NavDropdown, Form, FormControl, Button } from 'react-boots
 class AppHeader extends React.Component {
   render() {
     return (
-      <header className='fixed-top'>
+      <header className='fixed-top d-block'>
         <Navbar variant='dark' bg='dark' expand='lg'>
           <Navbar.Brand href='/'>Recipes</Navbar.Brand>
 
@@ -16,8 +16,8 @@ class AppHeader extends React.Component {
               style={{ maxHeight: '100px' }}
               navbarScroll
             >
-              <Nav.Link href='/action1'>Home</Nav.Link>
-              <Nav.Link href='/action2'>Link</Nav.Link>
+              <Nav.Link href='/'>Home</Nav.Link>
+              <Nav.Link href='/search_ingredient'>Search by Ingredient</Nav.Link>
               <NavDropdown title='DropDown' id='navbarScrollingDropdown'>
                 <NavDropdown.Item href='/action3'>Action</NavDropdown.Item>
                 <NavDropdown.Item href='/action4'>Another action</NavDropdown.Item>
