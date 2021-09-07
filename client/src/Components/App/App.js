@@ -11,6 +11,26 @@ import NewRecipe from '../NewRecipe/NewRecipe';
 import {BrowserRouter, Route} from 'react-router-dom'
 
 class App extends React.Component {
+  state = {
+    data: null
+  }
+
+  componentDidMount() {
+    this.callbackBackendAPI()
+      .then(res => this.setState({ data: res.express }))
+      .catch(err => console.error(err))
+  }
+
+  callbackBackendAPI = async () => {
+    const response = await fetch('/express_backend')
+    const body = await response.json()
+
+    if (response.status !== 200) {
+      throw Error(body.message)
+    }
+    return body
+  }
+
   render () {
     return (
       <>
@@ -27,6 +47,7 @@ class App extends React.Component {
                 <Route path="/recipe:id" component={Recipe}/>
                 <Route path="/new_recipe" component={NewRecipe}/>
               </div>
+              <p>Express: {this.state.data}</p>
             </section>
           </div>
         </BrowserRouter>
