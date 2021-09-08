@@ -1,9 +1,35 @@
 import React from 'react';
 import './AppHeader.css'
 import { Navbar, Nav, NavDropdown, Form, FormControl, Button } from 'react-bootstrap';
+import { connect } from 'react-redux'
+import { logout } from "../../actions/auth";
 
 class AppHeader extends React.Component {
+  constructor(props) {
+    super(props);
+    this.logOut = this.logOut.bind(this);
+
+    this.state = {
+      currentUser: undefined,
+    };
+  }
+
+  componentDidMount() {
+    const user = this.props.user;
+
+    if (user) {
+      this.setState({
+        currentUser: user
+      });
+    }
+  }
+
+  logOut() {
+    this.props.dispatch(logout());
+  }
+
   render() {
+    const { currentUser } = this.state;
     return (
       <header className='fixed-top d-block'>
         <Navbar variant='dark' bg='dark' expand='lg'>
@@ -18,6 +44,8 @@ class AppHeader extends React.Component {
             >
               <Nav.Link href='/'>Home</Nav.Link>
               <Nav.Link href='/search_ingredient'>Search by Ingredient</Nav.Link>
+              <Nav.Link href='/new_recipe'>New Recipe</Nav.Link>
+              <Nav.Link href='/search_results/public'>All recipes</Nav.Link>
               <NavDropdown title='DropDown' id='navbarScrollingDropdown'>
                 <NavDropdown.Item href='/action3'>Action</NavDropdown.Item>
                 <NavDropdown.Item href='/action4'>Another action</NavDropdown.Item>
@@ -31,8 +59,8 @@ class AppHeader extends React.Component {
               style={{ maxHeight: '100px' }}
               navbarScroll
             >
+              {/* may be better to replace it with a new component of [signup/login | profile/logout] */}
               <Nav.Link href='/signup'>Signup</Nav.Link>
-              <NavDropdown.Divider />
               <Nav.Link href='/login'>Login</Nav.Link>
             </Nav>
             <Form className='d-flex p-2'>
@@ -51,5 +79,11 @@ class AppHeader extends React.Component {
   }
 }
 
+function mapStateToProps(state) {
+  const { user } = state.auth;
+  return {
+    user,
+  };
+}
 
-export default AppHeader;
+export default connect(mapStateToProps)(AppHeader);

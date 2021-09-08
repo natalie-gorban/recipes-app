@@ -1,13 +1,24 @@
 import React from 'react';
 import './SearchResults.css'
+import { useParams } from 'react-router-dom'
+import { connect } from "react-redux";
 
-class SearchResults extends React.Component {
-  render () {
-    return (
-      <>
-        <h1>SearchResults</h1>
-      </>
-    )
-  }
+const SearchResults = () => {
+  let { owner } = useParams()
+
+  return (
+    <>
+      <h1>Search Results</h1>
+      <p>Owner: {owner}</p>
+    </>
+  )
 }
-export default SearchResults;
+
+function mapStateToProps(state) {
+  const { user } = state.auth;
+  return {
+    user,
+  };
+}
+
+export default connect(mapStateToProps)(SearchResults);
