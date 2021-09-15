@@ -21,12 +21,12 @@ jobs:
       # get image tag and prefix
       - run: |
           echo ::set-output IMAGE_NAME_CLIENT=tag::$(node -p "require('./package.json').version")-${GITHUB_SHA::8}
-          echo ::set-output IMAGE_NAME_CLIENT=prefix::ilyag/${{ env.APP_NAME }}-${{ env.IMAGE_NAME_CLIENT }}
+          echo ::set-output IMAGE_NAME_CLIENT=prefix::natush/recipe-app-client
         working-directory: ./${{ env.APP_NAME }}/client
         id: image-client
       - run: |
           echo ::set-output IMAGE_NAME_SERVER=tag::$(node -p "require('./package.json').version")-${GITHUB_SHA::8}
-          echo ::set-output IMAGE_NAME_SERVER=prefix::ilyag/${{ env.APP_NAME }}-${{ env.IMAGE_NAME_SERVER }}
+          echo ::set-output IMAGE_NAME_SERVER=prefix::natush/recipe-app-server
         working-directory: ./${{ env.APP_NAME }}/server
         id: image-server
 
