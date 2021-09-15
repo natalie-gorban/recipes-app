@@ -17,6 +17,8 @@ import { connect } from 'react-redux'
 import { logout } from "../../actions/auth";
 import { clearMessage } from "../../actions/message";
 
+import axios from 'axios';
+
 class App extends React.Component {
   constructor(props) {
     super(props);

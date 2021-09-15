@@ -1,0 +1,9 @@
+.MuiImageListItem-imgFullWidth {
+  margin: auto;
+  width: 300 !important;
+  height: 150 !important;
+}
+
+/* .MuiImageListItemBar-root {
+  padding: 20px;
+} */
