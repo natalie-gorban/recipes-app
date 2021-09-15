@@ -205,8 +205,10 @@ function mapStateToProps(state) {
   const { user } = state.auth;
   const value  = state.value
   return (
-    user,
-    value
+    {
+      ...user,
+      value
+    }
   )
 }
 
