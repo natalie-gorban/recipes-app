@@ -9,7 +9,7 @@ on:
 
 env:
   REGISTRY: docker.io
-  IMAGE_NAME: ${{ github.repository }}
+  APP_NAME: ${{ github.repository }}
 
 jobs:
   publish:
@@ -20,35 +20,37 @@ jobs:
 
       # get image tag and prefix
       - run: |
-          echo ::set-output IMAGE_NAME=tag::$(node -p "require('./package.json').version")-${GITHUB_SHA::8}
-          echo ::set-output IMAGE_NAME=prefix::ilyag/${{ env.IMAGE_NAME }}
-        working-directory: ./${{ env.IMAGE_NAME }}
-        id: image
+          echo ::set-output IMAGE_NAME_CLIENT=tag::$(node -p "require('./package.json').version")-${GITHUB_SHA::8}
+          echo ::set-output IMAGE_NAME_CLIENT=prefix::ilyag/${{ env.APP_NAME }}-${{ env.IMAGE_NAME_CLIENT }}
+        working-directory: ./${{ env.APP_NAME }}/client
+        id: image-client
+      - run: |
+          echo ::set-output IMAGE_NAME_SERVER=tag::$(node -p "require('./package.json').version")-${GITHUB_SHA::8}
+          echo ::set-output IMAGE_NAME_SERVER=prefix::ilyag/${{ env.APP_NAME }}-${{ env.IMAGE_NAME_SERVER }}
+        working-directory: ./${{ env.APP_NAME }}/server
+        id: image-server
 
       # build
       - run: |
           ## in actual environment needs to clean images to ensure stability, but for quickness comment out it
           # docker images -a --format "{{.ID}}" | xargs -I {} docker rmi {}
-          docker build . -t ${{ steps.image.outputs.prefix }}:${{ steps.image.outputs.tag }}
-          docker tag ${{ steps.image.outputs.prefix }}:${{ steps.image.outputs.tag }} ${{ steps.image.outputs.prefix }}:latest
-        working-directory: ./${{ env.IMAGE_NAME }}
+          docker build . -t ${{ steps.image-client.outputs.prefix }}:${{ steps.image-client.outputs.tag }}
+          docker tag ${{ steps.image-client.outputs.prefix }}:${{ steps.image-client.outputs.tag }} ${{ steps.image-client.outputs.prefix }}:latest
+        working-directory: ./${{ env.APP_NAME }}/client
+      - run: |
+          ## in actual environment needs to clean images to ensure stability, but for quickness comment out it
+          # docker images -a --format "{{.ID}}" | xargs -I {} docker rmi {}
+          docker build . -t ${{ steps.image-server.outputs.prefix }}:${{ steps.image-server.outputs.tag }}
+          docker tag ${{ steps.image-server.outputs.prefix }}:${{ steps.image-server.outputs.tag }} ${{ steps.image-server.outputs.prefix }}:latest
+        working-directory: ./${{ env.APP_NAME }}/server
 
       # publish
       - run: |
           docker login --username "${DOCKERHUB_USERNAME}" --password "${DOCKERHUB_TOKEN}"
-          docker push ${{ steps.image.outputs.prefix }}:latest
-          docker push ${{ steps.image.outputs.prefix }}:${{ steps.image.outputs.tag }}
+          docker push ${{ steps.image-client.outputs.prefix }}:latest
+          docker push ${{ steps.image-client.outputs.prefix }}:${{ steps.image-client.outputs.tag }}
+          docker push ${{ steps.image-server.outputs.prefix }}:latest
+          docker push ${{ steps.image-server.outputs.prefix }}:${{ steps.image-server.outputs.tag }}
         env:
           DOCKERHUB_USERNAME: ${{ secrets.DOCKERHUB_USERNAME }}
           DOCKERHUB_TOKEN: ${{ secrets.DOCKERHUB_TOKEN }}
-
-      # deploy
-      - run: git clone "https://$TOKEN@github.com/ilyagorban/reali-argo-app"
-        env:
-          TOKEN: ${{ secrets.ARGO_APP_REPO_TOKEN }}
-      - run: |
-          echo "image: {tag: ${{ steps.image.outputs.tag }} }" > ./values-version.yaml
-          git config --global user.email 'integration@ilyag.ilyag'
-          git config --global user.IMAGE_NAME 'CI'
-          git diff --exit-code && echo 'Already deployed' || (git commit -am 'Upgrade ${{ env.IMAGE_NAME }} to ${{ steps.image.outputs.tag }}' && git push)
-        working-directory: reali-argo-app/helm-${{ env.IMAGE_NAME }}
