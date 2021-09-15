@@ -1,5 +1,6 @@
 import React from 'react';
 import './Recipe.css'
+import { connect } from "react-redux";
 
 class Recipe extends React.Component {
   render () {
@@ -10,4 +11,12 @@ class Recipe extends React.Component {
     )
   }
 }
-export default Recipe;
+
+function mapStateToProps(state) {
+  const { user } = state.auth;
+  return {
+    user,
+  };
+}
+
+export default connect(mapStateToProps)(Recipe);

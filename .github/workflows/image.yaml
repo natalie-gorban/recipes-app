@@ -22,12 +22,12 @@ jobs:
       - run: |
           echo ::set-output IMAGE_NAME_CLIENT=tag::$(node -p "require('./package.json').version")-${GITHUB_SHA::8}
           echo ::set-output IMAGE_NAME_CLIENT=prefix::natush/recipe-app-client
-        working-directory: ./${{ env.APP_NAME }}/client
+        working-directory: ./client
         id: image-client
       - run: |
           echo ::set-output IMAGE_NAME_SERVER=tag::$(node -p "require('./package.json').version")-${GITHUB_SHA::8}
           echo ::set-output IMAGE_NAME_SERVER=prefix::natush/recipe-app-server
-        working-directory: ./${{ env.APP_NAME }}/server
+        working-directory: ./server
         id: image-server
 
       # build
@@ -36,13 +36,13 @@ jobs:
           # docker images -a --format "{{.ID}}" | xargs -I {} docker rmi {}
           docker build . -t ${{ steps.image-client.outputs.prefix }}:${{ steps.image-client.outputs.tag }}
           docker tag ${{ steps.image-client.outputs.prefix }}:${{ steps.image-client.outputs.tag }} ${{ steps.image-client.outputs.prefix }}:latest
-        working-directory: ./${{ env.APP_NAME }}/client
+        working-directory: ./client
       - run: |
           ## in actual environment needs to clean images to ensure stability, but for quickness comment out it
           # docker images -a --format "{{.ID}}" | xargs -I {} docker rmi {}
           docker build . -t ${{ steps.image-server.outputs.prefix }}:${{ steps.image-server.outputs.tag }}
           docker tag ${{ steps.image-server.outputs.prefix }}:${{ steps.image-server.outputs.tag }} ${{ steps.image-server.outputs.prefix }}:latest
-        working-directory: ./${{ env.APP_NAME }}/server
+        working-directory: ./server
 
       # publish
       - run: |

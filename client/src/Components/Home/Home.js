@@ -1,7 +1,9 @@
 import React from 'react';
 import './Home.css'
+import { connect } from "react-redux";
 
 class Home extends React.Component {
+
   render() {
     return (
       <>
@@ -48,5 +50,11 @@ class Home extends React.Component {
   }
 }
 
+function mapStateToProps(state) {
+  const { user } = state.auth;
+  return {
+    user,
+  };
+}
 
-export default Home;
+export default connect(mapStateToProps)(Home);
