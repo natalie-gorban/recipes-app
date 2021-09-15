@@ -55,24 +55,24 @@ class App extends React.Component {
 
   render () {
     return (
-        <BrowserRouter history={history}>
-          <div className="App">
-            <AppHeader/>
-            <section id="hero" className="d-block align-items-center justify-content-center">
-              <div className="container text-center">
-                <Route exact path="/" component={Home}/>
-                <Route path="/search_ingredient" component={SearchIngredient}/>
-                <Route path="/search_results/:owner" component={SearchResults}/>
-                <Route path="/recipe/:id" component={Recipe} />
-                <Route path="/profile" component={Profile}/>
-                <Route path="/login" component={Login}/>
-                <Route path="/signup" component={Signup}/>
-                <Route path="/add_recipe" component={AddRecipe}/>
-              </div>
-              <p>Express: {this.state.data || 'Backend is offline'}</p>
-            </section>
-          </div>
-        </BrowserRouter>
+      <BrowserRouter history={history}>
+        <div className="App">
+          <AppHeader/>
+          <section id="hero" className="d-block align-items-center justify-content-center">
+            <div className="container text-center">
+              <Route exact path="/" component={Home}/>
+              <Route path="/search_ingredient" component={SearchIngredient}/>
+              <Route path="/search_results/:owner" component={SearchResults}/>
+              <Route path="/recipe/:id" component={Recipe} />
+              <Route path="/profile" component={Profile}/>
+              <Route path="/login" component={Login}/>
+              <Route path="/signup" component={Signup}/>
+              <Route path="/add_recipe" component={AddRecipe}/>
+            </div>
+            <p>Express: {this.state.data || 'Backend is offline'}</p>
+          </section>
+        </div>
+      </BrowserRouter>
     )
   }
 }
