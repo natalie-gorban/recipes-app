@@ -9,6 +9,7 @@ import { StylesContext } from '@material-ui/styles';
 import { TextField, Grid, Paper, Typography, ButtonBase } from '@material-ui/core';
 import { compose } from 'redux'
 import { connect } from 'react-redux'
+import UploadFiles from '../upload-files/upload-files'
 
 
 const styles = (theme) => ({
@@ -108,7 +109,7 @@ class AddRecipe extends React.Component {
               <ButtonBase className={classes.image}>
                 <img className={classes.img} alt="complex" src="/static/images/grid/complex.jpg" />
               </ButtonBase>
-
+              <UploadFiles />
               <div >
                 <label>
                   <input className={classes.time} type="text" name="name" placeholder='Prep time'/>
