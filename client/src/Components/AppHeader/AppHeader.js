@@ -54,6 +54,7 @@ class AppHeader extends React.Component {
               </NavDropdown>
               <Nav.Link href='#' disabled></Nav.Link>
             </Nav>
+
             <Form className='d-flex p-2'>
               <FormControl
                 type='search'
