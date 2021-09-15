@@ -59,9 +59,19 @@ class AppHeader extends React.Component {
               style={{ maxHeight: '100px' }}
               navbarScroll
             >
-              {/* may be better to replace it with a new component of [signup/login | profile/logout] */}
-              <Nav.Link href='/signup'>Signup</Nav.Link>
-              <Nav.Link href='/login'>Login</Nav.Link>
+              {
+                !currentUser ?
+                  <>
+                    <Nav.Link href='/signup'>Signup</Nav.Link>
+                    <Nav.Link href='/login'>Login</Nav.Link>
+                  </>
+                :
+                  <>
+                    <Nav.Link href='/profile'>Profile</Nav.Link>
+                    <Nav.Link href='/' onClick={this.logOut}>Logout</Nav.Link>
+                  </>
+
+              }
             </Nav>
             <Form className='d-flex p-2'>
               <FormControl
