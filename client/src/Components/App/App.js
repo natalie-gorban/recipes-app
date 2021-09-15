@@ -2,12 +2,15 @@ import React from 'react';
 import './App.css'
 import AppHeader from '../AppHeader/AppHeader';
 import Home from '../Home/Home';
+
 import Signup from '../Signup/Signup';
 import Login from '../Login/Login';
+
 import SearchIngredient from '../SearchIngredient/SearchIngredient';
 import SearchResults from '../SearchResults/SearchResults';
 import Recipe from '../Recipe/Recipe';
-import NewRecipe from '../NewRecipe/NewRecipe';
+import AddRecipe from '../add-recipe/add-recipe';
+
 import { BrowserRouter, Route } from 'react-router-dom'
 import { store } from '../../helpers/store'
 import { Provider } from 'react-redux'
@@ -47,7 +50,7 @@ class App extends React.Component {
                 <Route path="/search_ingredient" component={SearchIngredient}/>
                 <Route path="/search_results" component={SearchResults}/>
                 <Route path="/recipe:id" component={Recipe}/>
-                <Route path="/new_recipe" component={NewRecipe}/>
+                <Route path="/add_recipe" component={AddRecipe}/>
               </div>
               <p>Express: {this.state.data}</p>
             </section>
