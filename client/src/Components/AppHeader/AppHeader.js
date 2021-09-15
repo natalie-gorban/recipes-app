@@ -47,10 +47,10 @@ class AppHeader extends React.Component {
               <Nav.Link href='/add_recipe'>Add Recipe</Nav.Link>
               <Nav.Link href='/search_ingredient'>Search by Ingredient</Nav.Link>
               <NavDropdown title='DropDown' id='navbarScrollingDropdown'>
-                <NavDropdown.Item href='/new_dummy_recipe'>New Dummy Recipe</NavDropdown.Item>
-                <NavDropdown.Item href='/action4'>Another action</NavDropdown.Item>
+                <NavDropdown.Item href='/recipe/1'>Recipe 1</NavDropdown.Item>
+                <NavDropdown.Item href='/recipe/2'>Recipe 2</NavDropdown.Item>
                 <NavDropdown.Divider />
-                <NavDropdown.Item href='/action5'>Something else here</NavDropdown.Item>
+                <NavDropdown.Item href='/recipe/3'>Recipe 3</NavDropdown.Item>
               </NavDropdown>
               <Nav.Link href='#' disabled></Nav.Link>
             </Nav>
@@ -78,7 +78,7 @@ class AppHeader extends React.Component {
                 :
                   <>
                     <Nav.Link href='/profile'>Profile</Nav.Link>
-                    <Nav.Link href='/login' onClick={this.logOut}>Logout</Nav.Link>
+                    <Nav.Link href='/' onClick={this.logOut}>Logout</Nav.Link>
                   </>
 
               }
