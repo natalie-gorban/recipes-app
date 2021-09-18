@@ -12,7 +12,7 @@ import SearchResults from '../SearchResults/SearchResults';
 import Recipe from '../Recipe/Recipe';
 import AddRecipe from '../add-recipe/add-recipe';
 import Profile from '../Profile/Profile';
-import { BrowserRouter, Route } from 'react-router-dom'
+import { Router, Route } from 'react-router-dom'
 import { connect } from 'react-redux'
 import { logout } from "../../actions/auth";
 import { clearMessage } from "../../actions/message";
@@ -55,7 +55,7 @@ class App extends React.Component {
 
   render () {
     return (
-      <BrowserRouter history={history}>
+      <Router history={history}>
         <div className="App">
           <AppHeader/>
           <section id="hero" className="d-block align-items-center justify-content-center">
@@ -72,7 +72,7 @@ class App extends React.Component {
             <p>Express: {this.state.data || 'Backend is offline'}</p>
           </section>
         </div>
-      </BrowserRouter>
+      </Router>
     )
   }
 }

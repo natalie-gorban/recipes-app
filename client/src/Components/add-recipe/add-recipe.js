@@ -1,14 +1,18 @@
 import React from 'react';
-import { makeStyles, withStyles } from '@material-ui/core/styles';
+import {
+  // makeStyles,
+  withStyles
+} from '@material-ui/core/styles';
 // import Grid from '@material-ui/core/Grid';
 // import Paper from '@material-ui/core/Paper';
 // import Typography from '@material-ui/core/Typography';
 // import ButtonBase from '@material-ui/core/ButtonBase';
-import { StylesContext } from '@material-ui/styles';
+// import { StylesContext } from '@material-ui/styles';
 // import { TextInput, View } from 'react-native'
 import { TextField, Grid, Paper, Typography, ButtonBase } from '@material-ui/core';
 import { compose } from 'redux'
 import { connect } from 'react-redux'
+import { Redirect } from 'react-router-dom';
 import UploadFiles from '../upload-files/upload-files'
 
 
@@ -87,10 +91,12 @@ class AddRecipe extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      value: "Placeholder"
+      value: "Placeholder",
     }
 
     this.onChangeTextHandle = this.onChangeTextHandle.bind(this)
+    this.save = this.save.bind(this)
+    this.cancel = this.cancel.bind(this)
   }
 
   onChangeTextHandle = (e) => {
@@ -99,8 +105,25 @@ class AddRecipe extends React.Component {
     })
   }
 
+  save = (e) => {
+    this.setState({
+      value: e
+    })
+  }
+
+  cancel = (e) => {
+    this.setState({
+      value: e
+    })
+  }
+
   render() {
-    const {classes} = this.props
+    const { classes, user: currentUser, } = this.props
+
+    if (!currentUser) {
+      return <Redirect to="/login" />;
+    }
+
     return (
       <form className={classes.root}>
         <Paper className={classes.paper}>
@@ -175,11 +198,11 @@ class AddRecipe extends React.Component {
                         Private Recipe
                       </label><br />
 
-                      <button onclick="save()" className={classes.save}>
+                    <button onClick={this.save} className={classes.save}>
                         Save
                       </button>
-                      <button onclick="cansel()" className={classes.cansel}>
-                        Cansel
+                      <button onClick={this.cancel} className={classes.cansel}>
+                        Cancel
                       </button>
                     </div>
                 </Grid>
@@ -195,9 +218,11 @@ class AddRecipe extends React.Component {
 
 
 function mapStateToProps(state) {
-  const value  = state.value
+  const { user } = state.auth
   return (
-    value
+    {
+      user,
+    }
   )
 }
 
