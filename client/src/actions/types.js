@@ -6,3 +6,6 @@ export const LOGOUT = "LOGOUT";
 
 export const SET_MESSAGE = "SET_MESSAGE";
 export const CLEAR_MESSAGE = "CLEAR_MESSAGE";
+
+export const ADD_FILE_SUCCESS = "ADD_FILE_SUCCESS";
+export const ADD_FILE_FAIL = "ADD_FILE_FAIL";

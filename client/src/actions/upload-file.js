@@ -1,20 +1,18 @@
 import {
-  ADD_RECIPE_SUCCESS,
-  ADD_RECIPE_FAIL,
-  EDIT_RECIPE_SUCCESS,
-  EDIT_RECIPE_FAIL,
-  DELETE_RECIPE_SUCCESS,
-  DELETE_RECIPE_FAIL,
+  ADD_FILE_SUCCESS,
+  ADD_FILE_FAIL,
   SET_MESSAGE,
 } from "./types";
 
-import RecipeService from "../services/auth.service";
+import UploadFileService from "../services/upload-file.service";
 
-export const addDummyRecipe = (name, file, body) => (dispatch) => {
-  return RecipeService.addDummyRecipe(name, file, body).then(
+export const upload = (file) => (dispatch) => {
+  return UploadFileService.upload(file).then(
     (response) => {
       dispatch({
-        type: ADD_RECIPE_SUCCESS,
+        type: ADD_FILE_SUCCESS,
+        imageName: response.data.name,
+        imageUrl: response.data.url,
       });
 
       dispatch({
@@ -33,7 +31,7 @@ export const addDummyRecipe = (name, file, body) => (dispatch) => {
         error.toString();
 
       dispatch({
-        type: ADD_RECIPE_FAIL,
+        type: ADD_FILE_FAIL,
       });
 
       dispatch({

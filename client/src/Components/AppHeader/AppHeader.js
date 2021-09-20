@@ -78,7 +78,7 @@ class AppHeader extends React.Component {
                 :
                   <>
                     <Nav.Link href='/profile'>Profile</Nav.Link>
-                    <Nav.Link href='/' onClick={this.logOut}>Logout</Nav.Link>
+                    <Nav.Link href='/login' onClick={this.logOut}>Logout</Nav.Link>
                   </>
 
               }

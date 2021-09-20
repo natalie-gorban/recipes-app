@@ -1,6 +1,5 @@
 import React from 'react';
 import {
-  // makeStyles,
   withStyles
 } from '@material-ui/core/styles';
 // import Grid from '@material-ui/core/Grid';
@@ -13,7 +12,7 @@ import { TextField, Grid, Paper, Typography, ButtonBase } from '@material-ui/cor
 import { compose } from 'redux'
 import { connect } from 'react-redux'
 import { Redirect } from 'react-router-dom';
-import UploadFiles from '../upload-files/upload-files'
+import UploadFile from '../upload-file/upload-file'
 
 
 const styles = (theme) => ({
@@ -119,7 +118,7 @@ class AddRecipe extends React.Component {
 
   render() {
     const { classes, user: currentUser, } = this.props
-
+    console.log(currentUser)
     if (!currentUser) {
       return <Redirect to="/login" />;
     }
@@ -130,9 +129,8 @@ class AddRecipe extends React.Component {
           <Grid container spacing={2}>
             <Grid item>
               <ButtonBase className={classes.image}>
-                <img className={classes.img} alt="complex" src="/static/images/grid/complex.jpg" />
+                <UploadFile className={classes.img}/>
               </ButtonBase>
-              <UploadFiles />
               <div >
                 <label>
                   <input className={classes.time} type="text" name="name" placeholder='Prep time'/>

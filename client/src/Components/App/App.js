@@ -12,12 +12,13 @@ import SearchResults from '../SearchResults/SearchResults';
 import Recipe from '../Recipe/Recipe';
 import AddRecipe from '../add-recipe/add-recipe';
 import Profile from '../Profile/Profile';
-import { Router, Route } from 'react-router-dom'
+import { BrowserRouter, Route, Switch } from 'react-router-dom'
 import { connect } from 'react-redux'
 import { logout } from "../../actions/auth";
 import { clearMessage } from "../../actions/message";
-import { history } from '../../helpers/history';
+// import { createBrowserHistory } from 'history';
 
+// const history = createBrowserHistory();
 
 class App extends React.Component {
   constructor(props) {
@@ -28,9 +29,9 @@ class App extends React.Component {
       data: null
     };
 
-    history.listen((location) => {
-      props.dispatch(clearMessage()); // clear message when changing location
-    });
+    // history.listen((location) => {
+    //   props.dispatch(clearMessage()); // clear message when changing location
+    // });
   }
 
   componentDidMount() {
@@ -55,24 +56,27 @@ class App extends React.Component {
 
   render () {
     return (
-      <Router history={history}>
+      // <BrowserRouter history={history}>
+      <BrowserRouter>
         <div className="App">
           <AppHeader/>
           <section id="hero" className="d-block align-items-center justify-content-center">
             <div className="container text-center">
-              <Route exact path="/" component={Home}/>
-              <Route path="/search_ingredient" component={SearchIngredient}/>
-              <Route path="/search_results/:owner" component={SearchResults}/>
-              <Route path="/recipe/:id" component={Recipe} />
-              <Route path="/profile" component={Profile}/>
-              <Route path="/login" component={Login}/>
-              <Route path="/signup" component={Signup}/>
-              <Route path="/add_recipe" component={AddRecipe}/>
+              <Switch>
+                <Route exact path="/" component={Home}/>
+                <Route path="/search_ingredient" component={SearchIngredient}/>
+                <Route path="/search_results/:owner" component={SearchResults}/>
+                <Route path="/recipe/:id" component={Recipe} />
+                <Route path="/profile" component={Profile}/>
+                <Route path="/login" component={Login}/>
+                <Route path="/signup" component={Signup}/>
+                <Route path="/add_recipe" component={AddRecipe}/>
+              </Switch>
             </div>
             <p>Express: {this.state.data || 'Backend is offline'}</p>
           </section>
         </div>
-      </Router>
+      </BrowserRouter>
     )
   }
 }

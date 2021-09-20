@@ -1,28 +1,22 @@
 import http from "../helpers/http-common";
 import authHeader from './auth-header';
 
-class UploadFilesService {
-  upload(file, onUploadProgress) {
+class UploadFileService {
+  upload(file, name) {
     let formData = new FormData();
 
     formData.append("file", file);
-
+    console.log('formdata from UploadFileService', formData.getAll('originalname'))
+    if (name) {
+      formData.set("originalname", name)
+    }
     return http.post("/upload", formData, {
       headers: {
         ...authHeader(),
         "Content-Type": "multipart/form-data",
       },
-      onUploadProgress,
-    });
-  }
-
-  getFileUrl(file) {
-    return http.get(`/file_url/:${file}`);
-  }
-
-  download(file) {
-    return http.get(`/file/:${file}`);
+    })
   }
 }
 
-export default new UploadFilesService();
+export default new UploadFileService();
