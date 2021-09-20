@@ -1,7 +1,7 @@
 const processFile = require("../middleware/upload");
 const { getAwsProvider } = require("../middleware/awsSTS");
 const { aws_region, aws_s3_bucket, cdn_url } = require("../config/aws.config")
-const { format } = require("util");
+const uuid = require("uuid");
 const { S3Client, PutObjectCommand } = require("@aws-sdk/client-s3");
 
 const client = new S3Client({
@@ -16,7 +16,9 @@ const s3_params = {
 
 exports.upload = async (req, res) => {
   try {
-    console.log("file.controller->upload: Uploading file", req.file)
+    console.log("file.controller->upload: Uploading file", req.file, req.body)
+    const random_name = `${uuid.v4().toString()}.${req.file.mimetype.substring(6)}`
+    const filename = req.body.filename == 'undefined' ? random_name : req.body.filename
     await processFile(req, res);
 
     if (!req.file) {
@@ -24,17 +26,18 @@ exports.upload = async (req, res) => {
     }
 
     // Make the file public
-    const publicUrl = `${cdn_url}/${req.file.originalname}`
+    const publicUrl = `${cdn_url}/${filename}`
     const response = await client.send(new PutObjectCommand({
       ...s3_params,
-      Key: req.file.originalname,
+      Key: filename,
       Body: req.file.buffer,
       ContentType: req.file.mimetype,
     }))
-    console.log('uploaded successfully')
+    let success_message = `Uploaded the file successfully: ${req.file.originalname}->${filename}`
+    console.log(success_message)
     res.status(200).send({
-      message: `Uploaded the file successfully: ${req.file.originalname}`,
-      name: req.file.originalname,
+      message: 'Uploaded',
+      name: filename,
       url: publicUrl,
     });
   } catch {

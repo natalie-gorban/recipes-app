@@ -6,8 +6,8 @@ import {
 
 import UploadFileService from "../services/upload-file.service";
 
-export const upload = (file) => (dispatch) => {
-  return UploadFileService.upload(file).then(
+export const upload = (file, name) => (dispatch) => {
+  return UploadFileService.upload(file, name).then(
     (response) => {
       dispatch({
         type: ADD_FILE_SUCCESS,

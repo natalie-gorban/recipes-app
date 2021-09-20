@@ -20,7 +20,7 @@ class UploadFile extends React.Component {
       message: "",
       loading: false,
     };
-    this.upload = this.upload.bind(this)
+    this.uploadHandle = this.uploadHandle.bind(this)
     this.handleChangeStatus = this.handleChangeStatus.bind(this)
   }
 
@@ -28,49 +28,42 @@ class UploadFile extends React.Component {
     console.log(status, meta)
   }
 
-  upload = (files, allFiles) => {
+  uploadHandle = (files, allFiles) => {
     console.log(files.map(f => f.meta))
-    this.setState({
-      loading: true,
-    });
 
     if (files.length === 1) {
-      const { dispatch } = this.props;
-      dispatch(upload(files[0].file))
+      const { dispatch, imageName } = this.props;
+      dispatch(upload(files[0].file, imageName))
           .then((req, res) => {
             this.setState({
-              message: res.message,
               imageName: res.imageName,
               imageUrl: res.imageUrl,
-              loading: false
             })
           })
           .catch((error) => {
             console.error(error)
-            this.setState({
-              loading: false
-            });
           })
     }
     allFiles.forEach(f => f.remove())
   }
 
   render() {
-    const { imageName, imageUrl } = this.props;
+    const { imageName, imageUrl, message } = this.props;
+    const input_message = message ? `${message}. Replace File` : 'Drag a new file'
 
     return (
       <Container>
         {
           imageName && imageUrl ?
-            <Image src={imageUrl} name={imageName} thumbnail/>
-            :
-            <Image src={`${cdn_url}/static/burger.jpg`} name='no image' thumbnail/>
+          <Image src={imageUrl} name={imageName} thumbnail/>
+          :
+          <Image src={`${cdn_url}/static/burger.jpg`} name='no image' thumbnail/>
         }
         <Dropzone
           onChangeStatus={this.handleChangeStatus}
-          onSubmit={this.upload}
+          onSubmit={this.uploadHandle}
           accept="image/*"
-          inputContent={(files, extra) => (extra.reject ? 'Image files only' : 'Drag Files')}
+          inputContent={(files, extra) => (extra.reject ? 'Image files only' : input_message)}
           styles={{
             dropzoneReject: { borderColor: 'red', backgroundColor: '#DAA' },
             inputLabel: (files, extra) => (extra.reject ? { color: 'red' } : {}),
@@ -89,12 +82,13 @@ class UploadFile extends React.Component {
 function mapStateToProps(state) {
   console.log(state)
   const { imageName, imageUrl } = state.uploadFile
+  const { message } = state.message
   const output = {
     imageUrl,
     imageName,
+    message
   }
 
-  console.log('mapStateToProps', state, output)
   return output
 }
 
