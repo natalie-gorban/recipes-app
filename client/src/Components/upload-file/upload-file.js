@@ -34,15 +34,6 @@ class UploadFile extends React.Component {
     if (files.length === 1) {
       const { dispatch, imageName } = this.props;
       dispatch(upload(files[0].file, imageName))
-          .then((req, res) => {
-            this.setState({
-              imageName: res.imageName,
-              imageUrl: res.imageUrl,
-            })
-          })
-          .catch((error) => {
-            console.error(error)
-          })
     }
     allFiles.forEach(f => f.remove())
   }
@@ -69,6 +60,7 @@ class UploadFile extends React.Component {
             inputLabel: (files, extra) => (extra.reject ? { color: 'red' } : {}),
           }}
           maxFiles={1}
+          maxSizeBytes = {512 * 1024}
           inputWithFilesContent={files => `${1 - files.length} more`}
           submitButtonDisabled={files => files.length < 1}
           submitButtonContent='Upload'
@@ -80,7 +72,6 @@ class UploadFile extends React.Component {
 }
 
 function mapStateToProps(state) {
-  console.log(state)
   const { imageName, imageUrl } = state.uploadFile
   const { message } = state.message
   const output = {

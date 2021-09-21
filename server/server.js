@@ -34,6 +34,4 @@ app.get('/healthz', (req, res) => {
   res.send({ express: 'Backend is online' });
 });
 
-require('./app/routes/auth.routes')(app);
-require('./app/routes/user.routes')(app);
-require('./app/routes/upload.routes')(app);
+require('./app/routes')(app);

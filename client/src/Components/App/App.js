@@ -16,9 +16,6 @@ import { BrowserRouter, Route, Switch } from 'react-router-dom'
 import { connect } from 'react-redux'
 import { logout } from "../../actions/auth";
 import { clearMessage } from "../../actions/message";
-// import { createBrowserHistory } from 'history';
-
-// const history = createBrowserHistory();
 
 class App extends React.Component {
   constructor(props) {
@@ -29,9 +26,6 @@ class App extends React.Component {
       data: null
     };
 
-    // history.listen((location) => {
-    //   props.dispatch(clearMessage()); // clear message when changing location
-    // });
   }
 
   componentDidMount() {
@@ -56,7 +50,6 @@ class App extends React.Component {
 
   render () {
     return (
-      // <BrowserRouter history={history}>
       <BrowserRouter>
         <div className="App">
           <AppHeader/>

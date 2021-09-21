@@ -2,13 +2,17 @@ import React from 'react';
 import {
   withStyles
 } from '@material-ui/core/styles';
-// import Grid from '@material-ui/core/Grid';
-// import Paper from '@material-ui/core/Paper';
-// import Typography from '@material-ui/core/Typography';
-// import ButtonBase from '@material-ui/core/ButtonBase';
-// import { StylesContext } from '@material-ui/styles';
-// import { TextInput, View } from 'react-native'
-import { TextField, Grid, Paper, Typography, ButtonBase } from '@material-ui/core';
+import {
+  TextField,
+  Grid,
+  Paper,
+  Typography,
+  ButtonBase,
+  Button,
+  FormGroup,
+  FormControlLabel,
+  Checkbox
+} from '@material-ui/core';
 import { compose } from 'redux'
 import { connect } from 'react-redux'
 import { Redirect } from 'react-router-dom';
@@ -90,120 +94,163 @@ class AddRecipe extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      value: "Placeholder",
+      prepTime: '',
+      cookTime: '',
+      recipeTitle: '',
+      description: '',
+      ingredients: '',
+      method: '',
+      privateRecipe: true,
     }
 
-    this.onChangeTextHandle = this.onChangeTextHandle.bind(this)
+    this.onChangeHandle = this.onChangeHandle.bind(this)
     this.save = this.save.bind(this)
     this.cancel = this.cancel.bind(this)
   }
 
-  onChangeTextHandle = (e) => {
+  onChangeHandle = (e) => {
+    const target = e.target;
+    const value = target.type === 'checkbox' ? target.checked : target.value;
+    const name = target.name;
+
     this.setState({
-      value: e
-    })
+      [name]: value
+    });
   }
 
   save = (e) => {
-    this.setState({
-      value: e
-    })
+    e.preventDefault();
+    console.log('save', e)
+    const {
+      imageName,
+      imageUrl,
+    } = this.props
+    const {
+      prepTime,
+      cookTime,
+      recipeTitle,
+      description,
+      ingredients,
+      method,
+      privateRecipe,
+    } = this.state
+    console.log('prepTime', prepTime, 'imageUrl', imageUrl)
   }
 
   cancel = (e) => {
+    e.preventDefault();
     this.setState({
       value: e
     })
   }
 
   render() {
-    const { classes, user: currentUser, } = this.props
-    console.log(currentUser)
+    const {
+      classes,
+      user: currentUser,
+    } = this.props
+
     if (!currentUser) {
       return <Redirect to="/login" />;
     }
 
     return (
-      <form className={classes.root}>
+      <form className={classes.root} onSubmit={this.save}>
         <Paper className={classes.paper}>
           <Grid container spacing={2}>
-            <Grid item>
-              <ButtonBase className={classes.image}>
-                <UploadFile className={classes.img}/>
-              </ButtonBase>
-              <div >
-                <label>
-                  <input className={classes.time} type="text" name="name" placeholder='Prep time'/>
-                  <input className={classes.time} type="text" name="name" placeholder='Cook time'/>
-                </label>
-              </div>
+            <Grid item xs container direction="column" spacing={2}>
+              <Grid item xs container direction="row" spacing={2}>
+                <ButtonBase className={classes.image}>
+                  <UploadFile
+                    className={classes.img}
+                  />
+                </ButtonBase>
+              </Grid>
+              <Grid item xs container direction="row" spacing={2}>
+
+                <TextField
+                  name="prepTime"
+                  label="Prep time"
+                  variant="outlined"
+                  className={classes.time}
+                  value={this.state.prepTime}
+                  onChange={this.onChangeHandle}
+                />
+                <TextField
+                  name="cookTime"
+                  label="Cook time"
+                  variant="outlined"
+                  className={classes.time}
+                  value={this.state.cookTime}
+                  onChange={this.onChangeHandle}
+                />
+              </Grid>
             </Grid>
 
-            <Grid item xs={12} sm container>
-              <Grid item xs container direction="column" spacing={2}>
-                <Grid item xs>
-                  <Typography gutterBottom variant="subtitle1">                  </Typography>
+            <Grid item xs container direction="column" spacing={2}>
+              <Grid item xs>
+                <Typography gutterBottom variant="subtitle1">
 
-                    <div className='form'>
-                      <label>
-                        <TextField
-                          id="outlined-multiline-static"
-                          label="Recipe Title"
-                          multiline
-                          rows={1}
-                          variant="outlined"
-                          className={classes.title}
-                        />
-                      </label>
-                      <label>
-                        <TextField
-                          id="outlined-multiline-static"
-                          label="Description"
-                          multiline
-                          rows={2}
-                          variant="outlined"
-                          className={classes.description}
-                        />
-                      </label>
-                      <label>
-                        <TextField
-                          id="outlined-multiline-static"
-                          label="Ingredients"
-                          multiline
-                          rows={6}
-                          variant="outlined"
-                          className={classes.ingredients}
-                        />
-                      </label>
-                      <label>
-                        <TextField
-                          id="outlined-multiline-static"
-                          label="Method"
-                          multiline
-                          rows={8}
-                          variant="outlined"
-                          className={classes.method}
-                        />
-                      </label>
+                  <TextField
+                    name="recipeTitle"
+                    label="Recipe Title"
+                    multiline
+                    rows={1}
+                    variant="outlined"
+                    className={classes.title}
+                    value={this.state.recipeTitle}
+                    onChange={this.onChangeHandle}
+                  />
+                  <TextField
+                    name="description"
+                    label="Description"
+                    multiline
+                    rows={2}
+                    variant="outlined"
+                    className={classes.description}
+                    value={this.state.description}
+                    onChange={this.onChangeHandle}
+                  />
+                  <TextField
+                    name="ingredients"
+                    label="Ingredients"
+                    multiline
+                    rows={6}
+                    variant="outlined"
+                    className={classes.ingredients}
+                    value={this.state.ingredients}
+                    onChange={this.onChangeHandle}
+                  />
+                  <TextField
+                    name="method"
+                    label="Method"
+                    multiline
+                    rows={8}
+                    variant="outlined"
+                    className={classes.method}
+                    value={this.state.method}
+                    onChange={this.onChangeHandle}
+                  />
 
-                    </div>
-                    <div className='button'>
-                    <label>
-                      <input
-                        name="private"
-                        type="checkbox"
-                        className={classes.private}/>
-                        Private Recipe
-                      </label><br />
+                  <FormGroup>
+                    <FormControlLabel
+                      control={<Checkbox
+                        name='privateRecipe'
+                        checked={this.state.privateRecipe}
+                        onChange={this.onChangeHandle}
+                      />}
+                      label="Private Recipe"
+                      className={classes.private}
+                    />
+                  </FormGroup>
+                  <Button className={classes.save} type="submit">
+                    Save
+                  </Button>
+                  <Button onClick={this.cancel} className={classes.cancel}>
+                    Cancel
+                  </Button>
+                </Typography>
 
-                    <button onClick={this.save} className={classes.save}>
-                        Save
-                      </button>
-                      <button onClick={this.cancel} className={classes.cansel}>
-                        Cancel
-                      </button>
-                    </div>
-                </Grid>
               </Grid>
             </Grid>
           </Grid>
@@ -217,9 +264,28 @@ class AddRecipe extends React.Component {
 
 function mapStateToProps(state) {
   const { user } = state.auth
+  const { imageName, imageUrl } = state.uploadFile
+  const {
+    prepTime,
+    cookTime,
+    recipeTitle,
+    description,
+    ingredients,
+    method,
+    privateRecipe,
+  } = state
   return (
     {
+      imageName,
+      imageUrl,
       user,
+      prepTime,
+      cookTime,
+      recipeTitle,
+      description,
+      ingredients,
+      method,
+      privateRecipe,
     }
   )
 }
