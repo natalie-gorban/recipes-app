@@ -94,13 +94,15 @@ class AddRecipe extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      prepTime: '',
-      cookTime: '',
-      recipeTitle: '',
-      description: '',
-      ingredients: '',
-      method: '',
-      privateRecipe: true,
+      formData: {
+        prepTime: '',
+        cookTime: '',
+        recipeTitle: '',
+        description: '',
+        ingredients: '',
+        method: '',
+        privateRecipe: true,
+      }
     }
 
     this.onChangeHandle = this.onChangeHandle.bind(this)
@@ -114,7 +116,10 @@ class AddRecipe extends React.Component {
     const name = target.name;
 
     this.setState({
-      [name]: value
+      formData: {
+        ...this.state.formData,
+        [name]: value
+      }
     });
   }
 
@@ -126,15 +131,9 @@ class AddRecipe extends React.Component {
       imageUrl,
     } = this.props
     const {
-      prepTime,
-      cookTime,
-      recipeTitle,
-      description,
-      ingredients,
-      method,
-      privateRecipe,
+      formData
     } = this.state
-    console.log('prepTime', prepTime, 'imageUrl', imageUrl)
+    console.log('formData: ', formData, imageName, imageUrl)
   }
 
   cancel = (e) => {
@@ -173,7 +172,7 @@ class AddRecipe extends React.Component {
                   label="Prep time"
                   variant="outlined"
                   className={classes.time}
-                  value={this.state.prepTime}
+                  value={this.state.formData.prepTime}
                   onChange={this.onChangeHandle}
                 />
                 <TextField
@@ -181,7 +180,7 @@ class AddRecipe extends React.Component {
                   label="Cook time"
                   variant="outlined"
                   className={classes.time}
-                  value={this.state.cookTime}
+                  value={this.state.formData.cookTime}
                   onChange={this.onChangeHandle}
                 />
               </Grid>
@@ -198,7 +197,7 @@ class AddRecipe extends React.Component {
                     rows={1}
                     variant="outlined"
                     className={classes.title}
-                    value={this.state.recipeTitle}
+                    value={this.state.formData.recipeTitle}
                     onChange={this.onChangeHandle}
                   />
                   <TextField
@@ -208,7 +207,7 @@ class AddRecipe extends React.Component {
                     rows={2}
                     variant="outlined"
                     className={classes.description}
-                    value={this.state.description}
+                    value={this.state.formData.description}
                     onChange={this.onChangeHandle}
                   />
                   <TextField
@@ -218,7 +217,7 @@ class AddRecipe extends React.Component {
                     rows={6}
                     variant="outlined"
                     className={classes.ingredients}
-                    value={this.state.ingredients}
+                    value={this.state.formData.ingredients}
                     onChange={this.onChangeHandle}
                   />
                   <TextField
@@ -228,7 +227,7 @@ class AddRecipe extends React.Component {
                     rows={8}
                     variant="outlined"
                     className={classes.method}
-                    value={this.state.method}
+                    value={this.state.formData.method}
                     onChange={this.onChangeHandle}
                   />
 
@@ -236,7 +235,7 @@ class AddRecipe extends React.Component {
                     <FormControlLabel
                       control={<Checkbox
                         name='privateRecipe'
-                        checked={this.state.privateRecipe}
+                        checked={this.state.formData.privateRecipe}
                         onChange={this.onChangeHandle}
                       />}
                       label="Private Recipe"
@@ -266,26 +265,14 @@ function mapStateToProps(state) {
   const { user } = state.auth
   const { imageName, imageUrl } = state.uploadFile
   const {
-    prepTime,
-    cookTime,
-    recipeTitle,
-    description,
-    ingredients,
-    method,
-    privateRecipe,
+    formData
   } = state
   return (
     {
       imageName,
       imageUrl,
       user,
-      prepTime,
-      cookTime,
-      recipeTitle,
-      description,
-      ingredients,
-      method,
-      privateRecipe,
+      formData
     }
   )
 }
