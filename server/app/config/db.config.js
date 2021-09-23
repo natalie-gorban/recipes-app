@@ -1,6 +1,11 @@
 module.exports = {
   URI: process.env.DB_URI,
-  dialect: "mysql",
+  ssl: true,
+  dialectOptions: {
+    ssl: {
+      rejectUnauthorized: false
+    }
+  },
   pool: {
     max: 5,
     min: 0,

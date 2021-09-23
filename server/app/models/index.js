@@ -5,6 +5,8 @@ const sequelize = new Sequelize(
   config.URI,
   {
     dialect: config.dialect,
+    ssl: config.ssl,
+    dialectOptions: config.dialectOptions,
     pool: {
       max: config.pool.max,
       min: config.pool.min,
