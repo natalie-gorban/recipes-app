@@ -6,14 +6,14 @@ checkDuplicateUsernameOrEmail = (req, res, next) => {
   let message = "Message not initialized";
   User.findOne({
     where: {
-      username: req.body.username
-    }
-  }).then(user => {
+      username: req.body.username,
+    },
+  }).then((user) => {
     if (user) {
       message = `Failed! Username [${user.username}] is already in use!`;
       console.log("checkDuplicateUsernameOrEmail message", message);
       res.status(400).send({
-        message
+        message,
       });
       return;
     }
@@ -21,14 +21,14 @@ checkDuplicateUsernameOrEmail = (req, res, next) => {
     // Email
     User.findOne({
       where: {
-        email: req.body.email
-      }
-    }).then(user => {
+        email: req.body.email,
+      },
+    }).then((user) => {
       if (user) {
         message = `Failed! Email of [${user.email}] is already in use!`;
         console.log("checkDuplicateUsernameOrEmail message", message);
         res.status(400).send({
-          message
+          message,
         });
         return;
       }

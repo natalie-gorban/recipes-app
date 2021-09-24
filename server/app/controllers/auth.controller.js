@@ -2,14 +2,12 @@ const db = require("../models");
 const config = require("../config/auth.config");
 const User = db.user;
 
-const Op = db.Sequelize.Op;
-
 var jwt = require("jsonwebtoken");
 var bcrypt = require("bcryptjs");
 
 exports.signup = (req, res) => {
   // Save User to Database
-  let message = 'Message not initialized'
+  let message = "Message not initialized";
   User.create({
     username: req.body.username,
     email: req.body.email,
@@ -30,16 +28,16 @@ exports.signup = (req, res) => {
 };
 
 exports.signin = (req, res) => {
-  let message = 'Message not initialized'
+  let message = "Message not initialized";
   User.findOne({
     where: {
-      username: req.body.username
-    }
+      username: req.body.username,
+    },
   })
-    .then(user => {
+    .then((user) => {
       if (!user) {
         message = `User [${req.body.username}] not found.`;
-        console.log('signin message', message, user)
+        console.log("signin message", message, user);
         return res.status(404).send({ message });
       }
 
@@ -50,15 +48,15 @@ exports.signin = (req, res) => {
 
       if (!passwordIsValid) {
         message = `Invalid Password for user [${req.body.username}]!`;
-        console.log('signin message', message)
+        console.log("signin message", message);
         return res.status(401).send({
           accessToken: null,
-          message
+          message,
         });
       }
 
       var token = jwt.sign({ id: user.id }, config.secret, {
-        expiresIn: 86400 // 24 hours
+        expiresIn: 86400, // 24 hours
       });
 
       message = `[${user.username}] logged in successfully.`;
@@ -70,11 +68,10 @@ exports.signin = (req, res) => {
         accessToken: token,
         message,
       });
-
     })
-    .catch(err => {
-      message = err.message
-      console.log('signin message', message)
+    .catch((err) => {
+      message = err.message;
+      console.log("signin message", message);
       res.status(500).send({ message });
     });
 };

@@ -1,47 +1,29 @@
 import http from "../helpers/http-common";
-import authHeader from './auth-header';
+import authHeader from "./auth-header";
+const API_URL = `${process.env.API_URL || "http://localhost:5000/api/"}recipe/`;
 
 class RecipeService {
-  add(formData, imageName, recipeId) {
-    console.log('RecipeService.add', formData, imageName, recipeId);
+  add(inputFormData, imageName, recipeId = undefined) {
+    console.log(
+      "RecipeService.add inputFormData, imageName, recipeId",
+      inputFormData,
+      imageName,
+      recipeId
+    );
+    inputFormData.imageName = imageName;
+    inputFormData.recipeId = recipeId; // can be undefined for a new recipe
 
-    formData.append('imageName', imageName);
-    formData.append('recipeId', recipeId); // can be undefined for a new recipe
+    let formData = new FormData();
+    Object.entries(inputFormData).forEach(([key, value]) => {
+      formData.append(key, value);
+    });
 
-    return http.post("/test", formData, {
-      headers: {
-        ...authHeader(),
-        "Content-Type": "multipart/form-data",
-      }
-    })
-  }
-
-  login(username, password) {
-    console.log(`${API_URL}signin`)
-    return axios
-      .post(API_URL + "signin", { username, password }, {
-        headers: {
-          'Content-Type': 'application/json',
-          'Access-Control-Allow-Origin': '*'
-        }
-      })
-      .then((response) => {
-        if (response.data.accessToken) {
-          localStorage.setItem("user", JSON.stringify(response.data));
-        }
-
-        return response.data;
-      });
-  }
-
-  get(recipeId) {
-    console.log('RecipeService.get', recipeId);
-
-    return http.post("/test", {recipeId}, {
+    return http
+      .post(`${API_URL}add`, inputFormData, {
         headers: {
           ...authHeader(),
-          'Content-Type': 'application/json',
-        }
+          "Content-Type": "multipart/form-data",
+        },
       })
       .then((response) => {
         return response.data;
@@ -49,14 +31,34 @@ class RecipeService {
   }
 
   delete(recipeId) {
-    console.log('RecipeService.delete', recipeId);
-
-    return http.post("/test", {recipeId}, {
+    console.log("RecipeService.delete", recipeId);
+    return http.post(
+      `${API_URL}delete`,
+      { recipeId },
+      {
         headers: {
           ...authHeader(),
-          'Content-Type': 'application/json',
+          "Content-Type": "application/json",
+        },
+      }
+    );
+  }
+
+  get(recipeId) {
+    console.log("RecipeService.get", recipeId);
+    return http
+      .get(
+        `${API_URL}get`,
+        { recipeId },
+        {
+          headers: {
+            "Content-Type": "application/json",
+          },
         }
-      })
+      )
+      .then((response) => {
+        return response.data;
+      });
   }
 }
 

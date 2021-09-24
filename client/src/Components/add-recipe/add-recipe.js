@@ -1,7 +1,5 @@
-import React from 'react';
-import {
-  withStyles
-} from '@material-ui/core/styles';
+import React from "react";
+import { withStyles } from "@material-ui/core/styles";
 import {
   TextField,
   Grid,
@@ -11,26 +9,27 @@ import {
   Button,
   FormGroup,
   FormControlLabel,
-  Checkbox
-} from '@material-ui/core';
-import { compose } from 'redux'
-import { connect } from 'react-redux'
-import { Redirect } from 'react-router-dom';
-import UploadFile from '../upload-file/upload-file'
-
+  Checkbox,
+} from "@material-ui/core";
+import { compose } from "redux";
+import { connect } from "react-redux";
+import { Redirect } from "react-router-dom";
+import UploadFile from "../upload-file/upload-file";
+import { setMessage } from "../../actions/message";
+import { addRecipe } from "../../actions/recipe";
 
 const styles = (theme) => ({
   root: {
     flexGrow: 1,
-    '& .MuiTextField-root': {
-    margin: theme.spacing(1),
-    // width: '50ch',
+    "& .MuiTextField-root": {
+      margin: theme.spacing(1),
+      // width: '50ch',
     },
   },
   paper: {
     padding: theme.spacing(2),
-    margin: 'auto',
-    marginTop: '20px',
+    margin: "auto",
+    marginTop: "20px",
     width: 1000,
     height: 800,
     // maxWidth: 1000,
@@ -40,114 +39,107 @@ const styles = (theme) => ({
     height: 300,
   },
   img: {
-    marginTop: '10px',
-    display: 'block',
-    maxWidth: '100%',
-    maxHeight: '100%',
+    marginTop: "10px",
+    display: "block",
+    maxWidth: "100%",
+    maxHeight: "100%",
   },
 
   time: {
-    width: '80px',
-    margin: '50px 20px',
-    fontSize: '3mm',
+    width: "80px",
+    margin: "50px 20px",
+    fontSize: "3mm",
   },
 
   title: {
-    width: '500px',
-    margin: '10px',
+    width: "500px",
+    margin: "10px",
   },
 
   description: {
-    width: '500px',
-    marginTop: '10px !important',
-    height: '100px',
+    width: "500px",
+    marginTop: "10px !important",
+    height: "100px",
   },
 
   ingredients: {
-    width: '500px',
-    margin: '10px 10px  !important',
-    height: '100px',
+    width: "500px",
+    margin: "10px 10px  !important",
+    height: "100px",
   },
 
   method: {
-    width: '500px',
-    margin: '60px !important',
-
+    width: "500px",
+    margin: "60px !important",
   },
   button: {
-    textAlign: 'left !important',
+    textAlign: "left !important",
   },
 
   save: {
-    width: '90px',
-    backgroundColor: 'orange',
-    margin: '10px'
+    width: "90px",
+    backgroundColor: "orange",
+    margin: "10px",
   },
 
   private: {
-    margin: '20px',
-  }
-})
-
+    margin: "20px",
+  },
+});
 
 class AddRecipe extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
       formData: {
-        prepTime: '',
-        cookTime: '',
-        recipeTitle: '',
-        description: '',
-        ingredients: '',
-        method: '',
+        prepTime: "",
+        cookTime: "",
+        recipeTitle: "",
+        description: "",
+        ingredients: "",
+        method: "",
         privateRecipe: true,
-      }
-    }
+      },
+    };
 
-    this.onChangeHandle = this.onChangeHandle.bind(this)
-    this.save = this.save.bind(this)
-    this.cancel = this.cancel.bind(this)
+    this.onChangeHandle = this.onChangeHandle.bind(this);
+    this.save = this.save.bind(this);
+    this.cancel = this.cancel.bind(this);
   }
 
   onChangeHandle = (e) => {
     const target = e.target;
-    const value = target.type === 'checkbox' ? target.checked : target.value;
+    const value = target.type === "checkbox" ? target.checked : target.value;
     const name = target.name;
 
     this.setState({
       formData: {
         ...this.state.formData,
-        [name]: value
-      }
+        [name]: value,
+      },
     });
-  }
+  };
 
   save = (e) => {
     e.preventDefault();
-    console.log('save', e)
-    const {
-      imageName,
-      imageUrl,
-    } = this.props
-    const {
-      formData
-    } = this.state
-    console.log('formData: ', formData, imageName, imageUrl)
-  }
+    const { imageName, recipeId, dispatch, history } = this.props;
+    const { formData } = this.state;
+    dispatch(addRecipe(formData, imageName)).then(() => {
+      history.push(`/recipe/${recipeId}`);
+      // dispatch(setMessage(res.message))
+      // window.location.reload();
+    });
+  };
 
   cancel = (e) => {
     e.preventDefault();
     this.setState({
-      value: e
-    })
-  }
+      value: e,
+    });
+  };
 
   render() {
-    const {
-      classes,
-      user: currentUser,
-    } = this.props
+    const { classes, user: currentUser } = this.props;
 
     if (!currentUser) {
       return <Redirect to="/login" />;
@@ -160,13 +152,10 @@ class AddRecipe extends React.Component {
             <Grid item xs container direction="column" spacing={2}>
               <Grid item xs container direction="row" spacing={2}>
                 <ButtonBase className={classes.image}>
-                  <UploadFile
-                    className={classes.img}
-                  />
+                  <UploadFile className={classes.img} />
                 </ButtonBase>
               </Grid>
               <Grid item xs container direction="row" spacing={2}>
-
                 <TextField
                   name="prepTime"
                   label="Prep time"
@@ -189,7 +178,6 @@ class AddRecipe extends React.Component {
             <Grid item xs container direction="column" spacing={2}>
               <Grid item xs>
                 <Typography gutterBottom variant="subtitle1">
-
                   <TextField
                     name="recipeTitle"
                     label="Recipe Title"
@@ -233,11 +221,13 @@ class AddRecipe extends React.Component {
 
                   <FormGroup>
                     <FormControlLabel
-                      control={<Checkbox
-                        name='privateRecipe'
-                        checked={this.state.formData.privateRecipe}
-                        onChange={this.onChangeHandle}
-                      />}
+                      control={
+                        <Checkbox
+                          name="privateRecipe"
+                          checked={this.state.formData.privateRecipe}
+                          onChange={this.onChangeHandle}
+                        />
+                      }
                       label="Private Recipe"
                       className={classes.private}
                     />
@@ -249,35 +239,28 @@ class AddRecipe extends React.Component {
                     Cancel
                   </Button>
                 </Typography>
-
               </Grid>
             </Grid>
           </Grid>
         </Paper>
       </form>
     );
-
   }
 }
 
-
 function mapStateToProps(state) {
-  const { user } = state.auth
-  const { imageName, imageUrl } = state.uploadFile
-  const {
-    formData
-  } = state
-  return (
-    {
-      imageName,
-      imageUrl,
-      user,
-      formData
-    }
-  )
+  const { user } = state.auth;
+  const { message } = state.message;
+  const { imageName, imageUrl } = state.uploadFile;
+  const { recipeId, imageName: recipeImageName } = state.recipe;
+  return {
+    imageName,
+    imageUrl,
+    recipeImageName,
+    user,
+    recipeId,
+    message
+  };
 }
 
-export default compose(
-  withStyles(styles),
-  connect(mapStateToProps)
-)(AddRecipe);
+export default compose(withStyles(styles), connect(mapStateToProps))(AddRecipe);
