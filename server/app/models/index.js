@@ -22,5 +22,11 @@ db.Sequelize = Sequelize;
 db.sequelize = sequelize;
 
 db.user = require("../models/user.model.js")(sequelize, Sequelize);
+db.recipe = require("../models/recipe.model.js")(sequelize, Sequelize);
+
+//// planetscale DBs based on Vitess (Serverless DB MySQL), it does not allow to use foreign key constraints, so we have to use not coupled IDs inside recipe schema
+// db.user.hasMany(db.recipe, {as: 'Recipes'})
+// db.image.belongsTo(db.recipe)
+
 
 module.exports = db;

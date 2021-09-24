@@ -1,7 +1,11 @@
 exports.publicContent = (req, res) => {
-  res.status(200).send("Public Content.");
+  let message = "Public Content."
+  console.log('publicContent message', message)
+  res.status(200).send(message);
 };
 
 exports.userContent = (req, res) => {
-  res.status(200).send("User Content.");
+  let message = "User Content."
+  console.log('userContent message', message)
+  res.status(200).send(message);
 };

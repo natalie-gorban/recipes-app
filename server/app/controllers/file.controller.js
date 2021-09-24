@@ -15,6 +15,7 @@ const s3_params = {
 }
 
 exports.upload = async (req, res) => {
+  let message = "Message not initialized"
   try {
     console.log("file.controller->upload: Uploading file", req.file, req.body)
     const random_name = `${uuid.v4().toString()}.${req.file.mimetype.substring(6)}`
@@ -22,7 +23,9 @@ exports.upload = async (req, res) => {
     await processFile(req, res);
 
     if (!req.file) {
-      return res.status(400).send({ message: "Please upload a file!" });
+      message = "Please upload a file!"
+      console.log('upload message', message)
+      return res.status(400).send({ message });
     }
 
     // Make the file public
@@ -33,22 +36,25 @@ exports.upload = async (req, res) => {
       Body: req.file.buffer,
       ContentType: req.file.mimetype,
     }))
-    let success_message = `Uploaded the file successfully: ${req.file.originalname}->${filename}`
-    console.log(success_message)
+    console.log(`upload: Uploaded the file successfully: ${req.file.originalname}->${filename}`)
+    message = 'Uploaded'
     res.status(200).send({
-      message: 'Uploaded',
+      message,
       name: filename,
       url: publicUrl,
     });
   } catch {
+    message = `Failed to upload: ${req.file.originalname}`
+    console.log('upload message', message)
     return res.status(500).send({
-      message: `Failed to upload: ${req.file.originalname}`
+      message
     });
   }
 
 };
 
 exports.getFileUrl = async (req, res) => {
+  let message = "Message not initialized"
   try {
     console.log("getFileUrl: Get public url of  uploaded file", req.params.name)
     res.status(200).send(
@@ -58,8 +64,10 @@ exports.getFileUrl = async (req, res) => {
       }
     );
   } catch (err) {
+    message = "Unable to read public url of the uploaded file!"
+    console.log('getFileUrl message', message)
     res.status(500).send({
-      message: "Unable to read public url of the uploaded file!",
+      message,
     });
   }
 };
