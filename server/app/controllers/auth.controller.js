@@ -10,35 +10,15 @@ var bcrypt = require("bcryptjs");
 exports.signup = (req, res) => {
   // Save User to Database
   let message = 'Message not initialized'
-  User.findOne({
-    where: {
-      username: req.body.username,
-    },
+  User.create({
+    username: req.body.username,
+    email: req.body.email,
+    password: bcrypt.hashSync(req.body.password, 8),
   })
-    .then((user) => {
-      if (user) {
-        message = `This user [${req.body.username}] is already registered.`;
-        console.log("signup message", message);
-        res.status(500).send({ message });
-      } else {
-        User.create({
-          username: req.body.username,
-          email: req.body.email,
-          password: bcrypt.hashSync(req.body.password, 8),
-        })
-          .then((user) => {
-            message = `User [${req.body.username}] was registered successfully!`;
-            console.log("signup message", message);
-            res.send({ message });
-          })
-          .catch((err) => {
-            message = err.message;
-            console.log("signup message", message);
-            res.status(500).send({
-              message,
-            });
-          });
-      }
+    .then(() => {
+      message = `User [${req.body.username}] was registered successfully!`;
+      console.log("signup message", message);
+      res.send({ message });
     })
     .catch((err) => {
       message = err.message;
