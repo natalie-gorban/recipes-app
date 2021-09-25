@@ -33,7 +33,7 @@ class AppHeader extends React.Component {
     return (
       <header className='fixed-top d-block'>
         <Navbar variant='dark' bg='dark' expand='lg'>
-          <Navbar.Brand href='/'>Recipes</Navbar.Brand>
+          <Navbar.Brand className='logo' href='/'>Recipes</Navbar.Brand>
           <Navbar.Toggle aria-controls='navbarScroll'/>
           <Navbar.Collapse id='navbarScroll'>
             <Nav
