@@ -1,15 +1,17 @@
 import React from 'react';
 import './Recipe.css'
+import { useParams } from 'react-router-dom'
 import { connect } from "react-redux";
 
-class Recipe extends React.Component {
-  render () {
-    return (
-      <>
-        <h1>Recipe</h1>
-      </>
-    )
-  }
+const Recipe = () => {
+  let { recipe_id } = useParams()
+
+  return (
+    <>
+      <h1>Recipe</h1>
+      <p>ID of recipe: {recipe_id}</p>
+    </>
+  )
 }
 
 function mapStateToProps(state) {
