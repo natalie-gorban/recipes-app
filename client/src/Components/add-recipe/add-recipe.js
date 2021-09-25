@@ -62,14 +62,15 @@ const styles = (theme) => ({
   },
 
   ingredients: {
-    width: "500px",
-    margin: "10px 10px  !important",
-    height: "100px",
+    width: '500px',
+    // margin: '10px !important',
+    height: '100px',
   },
 
   method: {
-    width: "500px",
-    margin: "60px !important",
+    width: '500px',
+    marginTop: '60px !important',
+
   },
   button: {
     textAlign: "left !important",
@@ -82,9 +83,10 @@ const styles = (theme) => ({
   },
 
   private: {
-    margin: "20px",
-  },
-});
+    margin: '5px',
+  }
+})
+
 
 class AddRecipe extends React.Component {
   constructor(props) {

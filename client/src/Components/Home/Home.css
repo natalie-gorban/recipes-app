@@ -1,9 +1,24 @@
 .MuiImageListItem-imgFullWidth {
   margin: auto;
-  width: 300 !important;
-  height: 150 !important;
+  /* width: 100 !important;
+  height: 500 !important; */
 }
 
 /* .MuiImageListItemBar-root {
-  padding: 20px;
+  width: 33%;
+} */
+
+#hero .container {
+  padding-top: 90px;
+}
+
+
+.MuiListSubheader-sticky {
+  font-size: 40px !important;
+  text-align: left !important;
+  background-color: mintcream !important;
+}
+/* 
+.connect\(Home\)-root-1 {
+  background-color: inherit !important;
 } */

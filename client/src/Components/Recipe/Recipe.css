@@ -1,0 +1,12 @@
+.connainer text-conter {
+height: 1000px;
+}
+/* 
+.connect\(Recipe\)-image-3 {
+  width: 400px !important;
+  height: 400px !important;
+} */
+
+.MuiGrid-spacing-xs-2 .MuiGrid-item {
+  padding: 15px !important;
+}

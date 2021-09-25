@@ -1,60 +1,128 @@
-import React, { useState, useEffect } from "react";
-import "./Recipe.css";
-import { useParams } from "react-router-dom";
+import React from 'react';
+import './Recipe.css'
+import { makeStyles, withStyles } from '@material-ui/core/styles';
+import { Grid, Typography, ButtonBase, Paper } from '@material-ui/core/';
+// import { Box, Rating, StarIcon } from '@mui/material/';
+import { useParams } from 'react-router-dom'
 import { connect } from "react-redux";
-import http from "../../helpers/http-common";
-const API_URL = `${process.env.API_URL || "http://localhost:5000/api/"}recipe/`;
+import { compose } from 'redux'
 
-const Recipe = () => {
-  let { recipeId } = useParams();
+const styles = (theme) => ({
+  root: {
+    flexGrow: 1,
+    '& .MuiTextField-root': {
+    margin: theme.spacing(1),
+    // width: '50ch',
+    },
+  },
 
-  const [formData, setFormData] = useState({});
 
-  useEffect(() => {
-    http
-      .post(
-        `${API_URL}get`,
-        { recipeId },
-        {
-          headers: {
-            "Content-Type": "multipart/form-data",
-          },
-        }
-      )
-      .then((response) => {
-        setFormData({ ...response.data });
-      })
-      .catch((err) => {
-        setFormData({ message: err.message, isError: true });
-      });
-  }, [recipeId]);
 
-  const handleClick = () => {
-    console.log('handleClick', recipeId);
+  paper: {
+    padding: theme.spacing(2),
+    margin: 'auto',
+    marginTop: '20px',
+    width: '1100px',
+    height: 'auto',
+  },
+  image: {
+    width: '300px',
+    height: '300px',
+  },
+  img: {
+    marginTop: '20px',
+    display: 'block',
+    maxWidth: '80%',
+    maxHeight: '80%',
+  },
+
+  method: {
+    margin: '40px'
   }
 
+});
+
+const Recipe = (props) => {
+  let { recipe_id } = useParams()
+  console.log(props)
+  const [value, setValue] = React.useState(2)
+  const [hover, setHover] = React.useState(-1)
+  const { classes } = props
   return (
-    <>
-      <h1>Recipe</h1>
-      {
-        !formData?.isError ? (
-          <input type="button" onClick={handleClick} value="Edit Recipe"/>
-      ) : (
-        <></>
-      )
+    <Paper className={classes.paper}>
+      <Grid container spacing={2}>
+        <Grid item>
+          <ButtonBase className={classes.image}>
+            <img className={classes.img} alt="complex" src="https://images.pexels.com/photos/357573/pexels-photo-357573.jpeg?cs=srgb&dl=pexels-pixabay-357573.jpg&fm=jpg" />
+          </ButtonBase>
+            {/* <Box
+              sx={{
+                width: 200,
+                display: 'flex',
+                alignItems:'center',
+              }}
+              >
+                <Rating
+                className='hover-feedback'
+                value={value}
+                precision={0.5}
+                onChange={(event, vewValue) => {
+                  setValue(newValue);
+                }}
+                onChangeActive={(event, newHower) => {
+                  setHover(newHover);
+                }}
+                emptyIcon={<StarIcon style={{ opacity:0.5 }} fontSize='inherit' />}
+                />
+                {value !== null && (
+                  <Box sx={{ ml: 2 }}>{labels[hover !== -1 ? hover : value]}</Box>
+                )}
+              </Box> */}
+          <p>Recipe id: {recipe_id}</p>
+          <h3>Ingredients:</h3>
+          <ul>
+            <li>Contrary to popular belief</li>
+            <li>Contrary to popular belief</li>
+            <li>Contrary to popular belief</li>
+            <li>Contrary to popular belief</li>
+          </ul>
+        </Grid>
 
-      }
-      <div>
-        {Object.entries(formData).map((entry) => {
-          return (
-            <p key={entry[0]}>
-              {entry[0]}: <span key={entry[0]}>{entry[1]}</span>
-            </p>
-          );
-        })}
-      </div>
-    </>
-  );
-};
+        <Grid item xs={12} sm container>
+          <Grid item xs container direction="column" spacing={2}>
+            <Grid item xs>
+              <p>Recipe id: {recipe_id}</p>
+              <h3>Method:</h3>
+              <ol className='method'>
 
-export default connect()(Recipe);
+              <li>Contrary to popular belief, Lorem Ipsum is not simply random text. It has roots in a piece of classical Latin literature from 45 BC, making it over 2000 years </li>
+              <li>Contrary to popular belief, Lorem Ipsum is not simply random text. It has roots in a piece of classical Latin literature from 45 BC, making it over 2000 years old. Richard McClintock, a Latin professor at Hampden-Sydney</li>
+              <li>Contrary to popular belief, Lorem Ipsum is not simply random text. It has roots in a piece of classical Latin literature from 45 BC, making it over 2000 years old. Hampden-Sydney</li>
+              <li>Contrary to popular belief, Lorem Ipsum is not simply random text. It has roots in a piece of classical making it over 2000 years old. Richard McClintock, a Latin professor at Hampden-Sydney</li>
+              <li>Contrary to popular belief, Lorem Ipsum is not simply random text. It has roots in a piece of classical Latin literature from 45 BC, making it over 2000 years old. Richard McClintock, a Latin professor at Hampden-Sydney</li>
+              <li>Contrary to popular belief, Loimply random text. It has roots in a piece of classical Latin literature from 45 BC, making it over 2000 years old. Richard McClintock, a Latin professor at Hampden-Sydney</li>
+              <li>Contrary to popular belief, Lorem Ipsum is not simply random text. It has ure from 45 BC, making it over 2000 years old. Richard McClintock, a Latin professor at Hampden-Sydney</li>
+              <li>Contrary to popular belief, Lorem Ipsum is not simply random text. It has roots in a piece of classical Latin literature from 45 BC, making it over 2000 years old. Richard McClintock, a Latin professor at Hampden-Sydney</li>
+              <li>Contrary to popular belief, Lorem Ipsum is not simply random text. It has roots in a piece of classical Latin literature from 45 BC, making it over 2000 years old. Richard McClintock, a Latin professor at Hampden-Sydney</li>
+              </ol>
+            </Grid>
+          </Grid>
+        </Grid>
+      </Grid>
+    </Paper>
+
+  )
+}
+
+function mapStateToProps(state) {
+  const { user } = state.auth;
+  return {
+    user,
+  };
+}
+
+export default compose(
+  withStyles(styles),
+  connect(mapStateToProps),
+
+)(Recipe);

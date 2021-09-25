@@ -22,8 +22,8 @@ const styles = (theme) => ({
     backgroundColor: theme.palette.background.paper,
   },
   imageList: {
-    width: 2200,
-    height: 1000,
+    width: 1000,
+    height: 950,
   },
   icon: {
     color: 'rgba(255, 255, 255, 0.54)',
@@ -31,7 +31,7 @@ const styles = (theme) => ({
 
   img: {
     width: 80,
-    height: 60,
+    height: 100,
   }
 });
 
@@ -48,9 +48,9 @@ class Home extends React.Component {
     const {classes} = this.props
     return (
       <div className={classes.root}>
-        <ImageList rowHeight={250} className={classes.imageList}>
+        <ImageList rowHeight={250} rowWidth={250} className={classes.imageList}>
           <ImageListItem key="Subheader" cols={2} style={{ height: 'auto' }}>
-            <ListSubheader component="div">December</ListSubheader>
+            <ListSubheader component="div">All recipes</ListSubheader>
           </ImageListItem>
 
           {itemData.map((item) => (
