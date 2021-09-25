@@ -3,23 +3,18 @@ import authHeader from "./auth-header";
 const API_URL = `${process.env.API_URL || "http://localhost:5000/api/"}recipe/`;
 
 class RecipeService {
-  add(inputFormData, imageName, recipeId = undefined) {
+  add(formData, imageName, recipeId = undefined) {
     console.log(
-      "RecipeService.add inputFormData, imageName, recipeId",
-      inputFormData,
+      "RecipeService.add formData, imageName, recipeId",
+      formData,
       imageName,
       recipeId
     );
-    inputFormData.imageName = imageName;
-    inputFormData.recipeId = recipeId; // can be undefined for a new recipe
-
-    let formData = new FormData();
-    Object.entries(inputFormData).forEach(([key, value]) => {
-      formData.append(key, value);
-    });
+    formData.imageName = imageName;
+    formData.recipeId = recipeId; // can be undefined for a new recipe
 
     return http
-      .post(`${API_URL}add`, inputFormData, {
+      .post(`${API_URL}add`, formData, {
         headers: {
           ...authHeader(),
           "Content-Type": "multipart/form-data",

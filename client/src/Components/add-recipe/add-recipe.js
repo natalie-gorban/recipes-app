@@ -122,13 +122,9 @@ class AddRecipe extends React.Component {
 
   save = (e) => {
     e.preventDefault();
-    const { imageName, recipeId, dispatch, history } = this.props;
+    const { imageName, dispatch } = this.props;
     const { formData } = this.state;
-    dispatch(addRecipe(formData, imageName)).then(() => {
-      history.push(`/recipe/${recipeId}`);
-      // dispatch(setMessage(res.message))
-      // window.location.reload();
-    });
+    dispatch(addRecipe(formData, imageName))
   };
 
   cancel = (e) => {
@@ -139,10 +135,15 @@ class AddRecipe extends React.Component {
   };
 
   render() {
-    const { classes, user: currentUser } = this.props;
+
+    const { classes, user: currentUser, recipeId } = this.props;
 
     if (!currentUser) {
       return <Redirect to="/login" />;
+    }
+
+    if (recipeId) {
+      return <Redirect to={`/recipe/${recipeId}`} />;
     }
 
     return (
@@ -252,15 +253,15 @@ function mapStateToProps(state) {
   const { user } = state.auth;
   const { message } = state.message;
   const { imageName, imageUrl } = state.uploadFile;
-  const { recipeId, imageName: recipeImageName } = state.recipe;
-  return {
+  const { recipeId } = state.recipe;
+  const outputState = {
     imageName,
     imageUrl,
-    recipeImageName,
     user,
     recipeId,
-    message
+    message,
   };
+  return outputState;
 }
 
 export default compose(withStyles(styles), connect(mapStateToProps))(AddRecipe);

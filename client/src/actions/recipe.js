@@ -13,7 +13,6 @@ import RecipeService from "../services/recipe.service";
 export const addRecipe = (formData, imageName, recipeId) => (dispatch) => {
   return RecipeService.add(formData, imageName, recipeId).then(
     (response) => {
-      console.log('action addRecipe', response.recipeId)
       dispatch({
         type: ADD_RECIPE_SUCCESS,
         recipeId: response.recipeId,
