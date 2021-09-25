@@ -4,7 +4,6 @@ const Recipe = db.recipe;
 exports.addRecipe = (req, res) => {
   // Save Recipe to Database
   let message = "Message not initialized";
-  console.log("controller addRecipe req.body", req.body);
   let fields = {
     ...req.body,
     userId: req.userId, // Provided by middleware/authJwt added from routes/recipe.routes
@@ -18,7 +17,7 @@ exports.addRecipe = (req, res) => {
     returning: true,
   })
     .then((recipe, isNewRecord) => {
-      let dirtyWorkaroundRecipeId = recipe[0].dataValues.id;
+      let dirtyWorkaroundRecipeId = recipe[0].dataValues.id; // due to known bug in sequelize, there is no possibility to get recipe.id after upsert
       if (isNewRecord) {
         message = `Existing recipe with id [${dirtyWorkaroundRecipeId}] has been edited successfully!`;
       } else {
