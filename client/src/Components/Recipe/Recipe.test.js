@@ -3,6 +3,6 @@ import Recipe from './Recipe';
 
 test('renders Recipe', () => {
   render(<Recipe />);
-  const linkElement = screen.getByText(/Recipe/i);
+  const linkElement = screen.getByText(/Recipe/);
   expect(linkElement).toBeInTheDocument();
 });

@@ -15,7 +15,6 @@ import { compose } from "redux";
 import { connect } from "react-redux";
 import { Redirect } from "react-router-dom";
 import UploadFile from "../upload-file/upload-file";
-import { setMessage } from "../../actions/message";
 import { addRecipe } from "../../actions/recipe";
 
 const styles = (theme) => ({
