@@ -136,7 +136,7 @@ class AddRecipe extends React.Component {
   render() {
 
     const { classes, user: currentUser, recipeId } = this.props;
-
+    console.log('render', this.props)
     if (!currentUser) {
       return <Redirect to="/login" />;
     }

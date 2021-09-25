@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import "./Recipe.css";
-import { useParams } from "react-router-dom";
+import { useParams, Link } from "react-router-dom";
 import { connect } from "react-redux";
 import http from "../../helpers/http-common";
 const API_URL = `${process.env.API_URL || "http://localhost:5000/api/"}recipe/`;
@@ -29,16 +29,12 @@ const Recipe = () => {
       });
   }, [recipeId]);
 
-  const handleClick = () => {
-    console.log('handleClick', recipeId);
-  }
-
   return (
     <>
       <h1>Recipe</h1>
       {
         !formData?.isError ? (
-          <input type="button" onClick={handleClick} value="Edit Recipe"/>
+          <Link to={`/add_recipe/${recipeId}`}>Edit Recipe #{recipeId}</Link>
       ) : (
         <></>
       )

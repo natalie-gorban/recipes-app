@@ -68,7 +68,7 @@ class App extends React.Component {
                 <Route path="/login" component={Login} />
                 <Route path="/signup" component={Signup} />
                 <Route path="/add_recipe" component={AddRecipe} />
-                <Route path="/add_recipe/:recipeId" component={AddRecipe} />
+                <Route path="/add_recipe/:editRecipeId" component={AddRecipe} />
               </Switch>
             </div>
             <p>Express: {this.state.data || "Backend is offline"}</p>
