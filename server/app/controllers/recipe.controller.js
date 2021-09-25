@@ -83,12 +83,16 @@ exports.getRecipe = (req, res) => {
     },
   })
     .then((recipe) => {
-      message = `Recipe with id [${recipe.id}] was created by user [${recipe.id}], but was requested to be deleted by user [${req.body.userId}]`;
-      console.log("deleteRecipe message", message);
+      message = `Recipe with id [${recipe.id}]`;
+      console.log("getRecipe message", message);
+      res.status(200).send({
+        ...recipe.dataValues,
+        message,
+      })
     })
     .catch((err) => {
-      message = err.message;
-      console.log("deleteRecipe message", message);
+      message = err.message === "Cannot read property 'id' of null" ? `There is no recipe with id [${req.body.recipeId}]` : err.message;
+      console.log("getRecipe message", message);
       res.status(500).send({
         message,
       });
