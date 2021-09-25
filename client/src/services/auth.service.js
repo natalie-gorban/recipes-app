@@ -1,13 +1,13 @@
 import axios from "axios";
-
-const API_URL = (process.env.API_URL || "http://localhost:5000/api/") + "auth/";
+import { API_URL } from '../config'
+const BASE_URL = `${API_URL}auth/`;
 
 class AuthService {
   login(username, password) {
-    console.log(`${API_URL}signin`);
+    console.log(`${BASE_URL}signin`);
     return axios
       .post(
-        API_URL + "signin",
+        BASE_URL + "signin",
         { username, password },
         {
           headers: {
@@ -31,7 +31,7 @@ class AuthService {
 
   register(username, email, password) {
     return axios.post(
-      API_URL + "signup",
+      BASE_URL + "signup",
       {
         username,
         email,

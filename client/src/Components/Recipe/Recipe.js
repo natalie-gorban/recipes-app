@@ -1,11 +1,14 @@
-import React from 'react';
+import React, { useState, useEffect } from "react";
 import './Recipe.css'
 import { makeStyles, withStyles } from '@material-ui/core/styles';
 import { Grid, Typography, ButtonBase, Paper } from '@material-ui/core/';
 // import { Box, Rating, StarIcon } from '@mui/material/';
-import { useParams } from 'react-router-dom'
+import { useParams, Link } from "react-router-dom";
 import { connect } from "react-redux";
 import { compose } from 'redux'
+import http from "../../helpers/http-common";
+import { CDN_URL, API_URL } from '../../config'
+const BASE_URL = `${API_URL}recipe/`;
 
 const styles = (theme) => ({
   root: {
@@ -43,12 +46,34 @@ const styles = (theme) => ({
 });
 
 const Recipe = (props) => {
-  let { recipe_id } = useParams()
-  console.log(props)
+  let { recipeId } = useParams()
+
   const [value, setValue] = React.useState(2)
   const [hover, setHover] = React.useState(-1)
+  const [formData, setFormData] = useState({});
+
   const { classes } = props
-  return (
+
+  useEffect(() => {
+    http
+      .post(
+        `${BASE_URL}get`,
+        { recipeId },
+        {
+          headers: {
+            "Content-Type": "multipart/form-data",
+          },
+        }
+      )
+      .then((response) => {
+        setFormData({ ...response.data });
+      })
+      .catch((err) => {
+        setFormData({ message: err.message, isError: true });
+      });
+  }, [recipeId]);
+
+  const output = (
     <Paper className={classes.paper}>
       <Grid container spacing={2}>
         <Grid item>
@@ -78,7 +103,7 @@ const Recipe = (props) => {
                   <Box sx={{ ml: 2 }}>{labels[hover !== -1 ? hover : value]}</Box>
                 )}
               </Box> */}
-          <p>Recipe id: {recipe_id}</p>
+          <p>Recipe id: {recipeId}</p>
           <h3>Ingredients:</h3>
           <ul>
             <li>Contrary to popular belief</li>
@@ -91,7 +116,7 @@ const Recipe = (props) => {
         <Grid item xs={12} sm container>
           <Grid item xs container direction="column" spacing={2}>
             <Grid item xs>
-              <p>Recipe id: {recipe_id}</p>
+              <p>Recipe id: {recipeId}</p>
               <h3>Method:</h3>
               <ol className='method'>
 
@@ -112,6 +137,32 @@ const Recipe = (props) => {
     </Paper>
 
   )
+
+  const simpleOutput = (
+    <>
+      <h1>Recipe</h1>
+      {
+        !formData?.isError ? (
+          <Link to={`/add_recipe/${recipeId}`}>Edit Recipe #{recipeId}</Link>
+      ) : (
+        <></>
+      )
+
+      }
+      <div>
+        {Object.entries(formData).map((entry) => {
+          return (
+            <p key={entry[0]}>
+              {entry[0]}: <span key={entry[0]}>{entry[1]}</span>
+            </p>
+          );
+        })}
+      </div>
+    </>
+  );
+
+  return simpleOutput; // or output or simpleOutput
+
 }
 
 function mapStateToProps(state) {

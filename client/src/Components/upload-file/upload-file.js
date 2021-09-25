@@ -8,7 +8,7 @@ import {
   Image,
   Container
 } from 'react-bootstrap'
-import { cdn_url } from '../../helpers/config'
+import { cdn_url } from '../../config'
 
 class UploadFile extends React.Component {
   constructor(props) {
