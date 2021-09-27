@@ -15,5 +15,5 @@ module.exports = (app) => {
 
   app.post("/api/recipe/get", controller.getRecipe);
 
-  app.post("/api/recipe/all", controller.getAllRecipes);
+  app.get("/api/recipe/all", controller.getAllRecipes);
 };

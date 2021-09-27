@@ -1,6 +1,6 @@
 import http from "../helpers/http-common";
 import authHeader from "./auth-header";
-import { API_URL } from '../config'
+import { API_URL } from "../config";
 const BASE_URL = `${API_URL}recipe/`;
 
 class RecipeService {
@@ -43,7 +43,7 @@ class RecipeService {
   get(recipeId) {
     console.log("RecipeService.get", recipeId);
     return http
-      .get(
+      .post(
         `${BASE_URL}get`,
         { recipeId },
         {
@@ -55,6 +55,12 @@ class RecipeService {
       .then((response) => {
         return response.data;
       });
+  }
+
+  getAll() {
+    return http.get(`${BASE_URL}all`).then((response) => {
+      return response.data;
+    });
   }
 }
 
