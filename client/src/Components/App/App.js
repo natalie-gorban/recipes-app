@@ -7,8 +7,6 @@ import Home from "../Home/Home";
 import Signup from "../Signup/Signup";
 import Login from "../Login/Login";
 
-import SearchIngredient from "../SearchIngredient/SearchIngredient";
-import SearchResults from "../SearchResults/SearchResults";
 import Recipe from "../Recipe/Recipe";
 import AddRecipe from "../add-recipe/add-recipe";
 import Profile from "../Profile/Profile";
@@ -58,11 +56,6 @@ class App extends React.Component {
             <div className="container text-center">
               <Switch>
                 <Route exact path="/" component={Home} />
-                <Route path="/search_ingredient" component={SearchIngredient} />
-                <Route
-                  path="/search_results/:owner"
-                  component={SearchResults}
-                />
                 <Route path="/recipe/:recipeId" component={Recipe} />
                 <Route path="/profile" component={Profile} />
                 <Route path="/login" component={Login} />

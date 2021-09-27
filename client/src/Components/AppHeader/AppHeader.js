@@ -42,10 +42,6 @@ class AppHeader extends React.Component {
               navbarScroll
             >
               <Nav.Link href='/'>Home</Nav.Link>
-              <Nav.Link href='/search_ingredient'>Search by Ingredient</Nav.Link>
-              <Nav.Link href='/search_results/public'>All recipes</Nav.Link>
-              <Nav.Link href='/add_recipe'>Add Recipe</Nav.Link>
-              <Nav.Link href='/search_ingredient'>Search by Ingredient</Nav.Link>
               <NavDropdown title='DropDown' id='navbarScrollingDropdown'>
                 <NavDropdown.Item href='/recipe/1'>Recipe 1</NavDropdown.Item>
                 <NavDropdown.Item href='/recipe/2'>Recipe 2</NavDropdown.Item>
