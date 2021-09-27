@@ -44,6 +44,12 @@ class Home extends React.Component {
 
   render() {
     const { classes, recipes, searchText } = this.props;
+    const filterRecipes = recipes.filter((recipe) => {
+      return recipe.recipeTitle
+        .toLowerCase()
+        .includes(searchText.toLowerCase());
+    });
+
     return (
       <div className={classes.root}>
         <ImageList rowHeight={250} rowWidth={250} className={classes.imageList}>
@@ -55,7 +61,7 @@ class Home extends React.Component {
             </ListSubheader>
           </ImageListItem>
 
-          {recipes.map((item) => (
+          {filterRecipes.map((item) => (
             <ImageListItem key={item.recipeId}>
               <Link to={`/recipe/${item.recipeId}`}>
                 <img
