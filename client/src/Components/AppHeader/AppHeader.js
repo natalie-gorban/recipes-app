@@ -12,6 +12,7 @@ import { connect } from "react-redux";
 import { compose } from "redux";
 import { logout } from "../../actions/auth";
 import { withRouter } from "react-router-dom";
+import { setSearchText } from "../../actions/search";
 
 class AppHeader extends React.Component {
   constructor(props) {
@@ -20,44 +21,31 @@ class AppHeader extends React.Component {
     this.onChangeSearch = this.onChangeSearch.bind(this);
     this.onSubmitSearch = this.onSubmitSearch.bind(this);
 
-    this.state = {
-      currentUser: undefined,
-      search: undefined,
-    };
-  }
+    this.props.setSearchText(this.props.location.state?.searchText || "") // initialize 'searchText' after redirection to '/'
 
-  componentDidMount() {
-    const user = this.props.user;
-
-    if (user) {
-      this.setState({
-        currentUser: user,
-      });
-    }
   }
 
   logOut() {
-    this.props.dispatch(logout());
+    this.props.logout();
   }
 
-  onChangeSearch() {
-    this.setState({
-      search: undefined,
-    });
+  onChangeSearch(e) {
+    e.preventDefault();
+    this.props.setSearchText(e.target.value);
   }
 
   onSubmitSearch(e) {
     e.preventDefault();
-    console.log("submit", this.props, window.location.pathname);
-    const { history } = this.props;
+    const { history, searchText } = this.props;
+    console.log("onSubmitSearch", this.state, this.props);
     if (window.location.pathname !== "/") {
-      history.push("/");
+      history.push({pathname: "/", state: { searchText }}); // this way we send 'searchText' state to '/' path when user clicks 'Search'
       window.location.reload();
     }
   }
 
   render() {
-    const { currentUser } = this.state;
+    const { user: currentUser, searchText } = this.props;
     return (
       <header className="fixed-top d-block">
         <Navbar variant="dark" bg="dark" expand="lg">
@@ -88,6 +76,8 @@ class AppHeader extends React.Component {
                 placeholder="Search"
                 className="me-2"
                 aria-label="Search"
+                value={searchText}
+                onChange={this.onChangeSearch}
               />
               <Button
                 variant="outline-success"
@@ -126,9 +116,21 @@ class AppHeader extends React.Component {
 
 function mapStateToProps(state) {
   const { user } = state.auth;
+  const { searchText } = state.search;
   return {
     user,
+    searchText,
   };
 }
 
-export default compose(withRouter, connect(mapStateToProps))(AppHeader);
+function mapDispatchToProps(dispatch) {
+  return {
+    setSearchText: (searchText) => dispatch(setSearchText(searchText)),
+    logout: () => dispatch(logout()),
+  };
+}
+
+export default compose(
+  withRouter,
+  connect(mapStateToProps, mapDispatchToProps)
+)(AppHeader);
