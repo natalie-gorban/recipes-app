@@ -14,4 +14,6 @@ module.exports = (app) => {
   );
 
   app.post("/api/recipe/get", controller.getRecipe);
+
+  app.get("/api/recipe/all", controller.getAllRecipes);
 };
