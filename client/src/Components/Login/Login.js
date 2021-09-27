@@ -54,14 +54,10 @@ class Login extends React.Component {
 
     this.form.validateAll();
 
-    const { dispatch, history } = this.props;
+    const { dispatch } = this.props;
 
     if (this.checkBtn.context._errors.length === 0) {
       dispatch(login(this.state.username, this.state.password))
-        .then(() => {
-          history.push("/profile");
-          window.location.reload();
-        })
         .catch(() => {
           this.setState({
             loading: false
