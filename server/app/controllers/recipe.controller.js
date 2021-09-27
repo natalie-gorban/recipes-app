@@ -88,11 +88,39 @@ exports.getRecipe = (req, res) => {
       res.status(200).send({
         ...recipe.dataValues,
         message,
-      })
+      });
     })
     .catch((err) => {
-      message = err.message === "Cannot read property 'id' of null" ? `There is no recipe with id [${req.body.recipeId}]` : err.message;
+      message =
+        err.message === "Cannot read property 'id' of null"
+          ? `There is no recipe with id [${req.body.recipeId}]`
+          : err.message;
       console.log("getRecipe message", message);
+      res.status(500).send({
+        message,
+      });
+    });
+};
+
+exports.getAllRecipes = (req, res) => {
+  let message = "Message not initialized";
+  Recipe.findAll({
+    attributes: [["id", "recipeId"], "recipeTitle", "imageName", "userId"],
+  })
+    .then((recipes) => {
+      let output = [];
+      recipes.forEach((entry) => output.push(entry.dataValues));
+      console.log("getAllRecipes recipes", output);
+      message = `Found [${recipes.length}] recipes`;
+      console.log("getAllRecipes message", message);
+      res.status(200).send({
+        recipes: output,
+        message,
+      });
+    })
+    .catch((err) => {
+      message = err.message;
+      console.log("getAllRecipes message", message);
       res.status(500).send({
         message,
       });
