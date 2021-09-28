@@ -8,6 +8,7 @@ import {
   Paper,
   List,
   ListItemText,
+  Chip,
 } from "@material-ui/core/";
 // import { Box, Rating, StarIcon } from '@mui/material/';
 import { useParams, Link } from "react-router-dom";
@@ -111,7 +112,9 @@ const Recipe = (props) => {
                   <Box sx={{ ml: 2 }}>{labels[hover !== -1 ? hover : value]}</Box>
                 )}
               </Box> */}
-          <Typography variant="body2">Recipe id: {formData.id} created by @{formData.username}</Typography>
+          <Typography variant="body2">
+            Recipe id: {formData.id} created by @{formData.username}
+          </Typography>
           <Typography variant="h5">Ingredients</Typography>
           <List dense={true}>
             {String(formData.ingredients)
@@ -132,16 +135,13 @@ const Recipe = (props) => {
           <Grid item xs container direction="column" spacing={2}>
             <Grid item xs>
               <Typography variant="h1">{formData.recipeTitle}</Typography>
-              <Typography variant="h4">Description</Typography>
-              <List dense={true}>
-                {String(formData.description)
-                  .split("\n")
-                  .map((descriptionPart, index) => {
-                    return (
-                      <ListItemText key={index}>{descriptionPart}</ListItemText>
-                    );
-                  })}
-              </List>
+              <Typography variant="h4">Description or tags</Typography>
+              {String(formData.description)
+                .split(" ")
+                .map((tag, index) => {
+                  // https://mui.com/components/chips/
+                  return <Chip key={index} label={tag} variant="outlined" />;
+                })}
 
               <Typography variant="h4">Method</Typography>
               <ol className="method">
