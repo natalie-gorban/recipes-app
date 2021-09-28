@@ -1,13 +1,20 @@
 import React, { useState, useEffect } from "react";
 import "./Recipe.css";
-import { makeStyles, withStyles } from "@material-ui/core/styles";
-import { Grid, Typography, ButtonBase, Paper } from "@material-ui/core/";
+import { withStyles } from "@material-ui/core/styles";
+import {
+  Grid,
+  Typography,
+  ButtonBase,
+  Paper,
+  List,
+  ListItemText,
+} from "@material-ui/core/";
 // import { Box, Rating, StarIcon } from '@mui/material/';
 import { useParams, Link } from "react-router-dom";
 import { connect } from "react-redux";
 import { compose } from "redux";
 import http from "../../helpers/http-common";
-import { CDN_URL, API_URL } from "../../config";
+import { CDN_URL, API_URL, DEFAULT_IMAGE_NAME } from "../../config";
 const BASE_URL = `${API_URL}recipe/`;
 
 const styles = (theme) => ({
@@ -23,7 +30,7 @@ const styles = (theme) => ({
     padding: theme.spacing(2),
     margin: "auto",
     marginTop: "20px",
-    width: "1100px",
+    width: "100%",
     height: "auto",
   },
   image: {
@@ -45,8 +52,8 @@ const styles = (theme) => ({
 const Recipe = (props) => {
   let { recipeId } = useParams();
 
-  const [value, setValue] = React.useState(2);
-  const [hover, setHover] = React.useState(-1);
+  // const [value, setValue] = React.useState(2);
+  // const [hover, setHover] = React.useState(-1);
   const [formData, setFormData] = useState({});
 
   const { classes } = props;
@@ -77,8 +84,8 @@ const Recipe = (props) => {
           <ButtonBase className={classes.image}>
             <img
               className={classes.img}
-              alt="complex"
-              src="https://images.pexels.com/photos/357573/pexels-photo-357573.jpeg?cs=srgb&dl=pexels-pixabay-357573.jpg&fm=jpg"
+              alt={`Recipe Id ${formData.recipeId}`}
+              src={`${CDN_URL}/${formData.imageName || DEFAULT_IMAGE_NAME}`}
             />
           </ButtonBase>
           {/* <Box
@@ -104,74 +111,45 @@ const Recipe = (props) => {
                   <Box sx={{ ml: 2 }}>{labels[hover !== -1 ? hover : value]}</Box>
                 )}
               </Box> */}
-          <p>Recipe id: {recipeId}</p>
-          <h3>Ingredients:</h3>
-          <ul>
+          <Typography variant="body2">Recipe id: {formData.id}</Typography>
+          <Typography variant="h5">Ingredients</Typography>
+          <List dense={true}>
             {String(formData.ingredients)
               .split("\n")
-              .map((ingredient) => {
-                return <li>{ingredient}</li>;
+              .map((ingredient, index) => {
+                return <ListItemText key={index}>{ingredient}</ListItemText>;
               })}
-          </ul>
+          </List>
+          <Typography variant="h5">
+            Preparation time: {formData.prepTime}
+          </Typography>
+          <Typography variant="h5">
+            Cooking time: {formData.cookTime}
+          </Typography>
         </Grid>
 
         <Grid item xs={12} sm container>
           <Grid item xs container direction="column" spacing={2}>
             <Grid item xs>
-              <p>Recipe id: {recipeId}</p>
-              <h3>Method:</h3>
+              <Typography variant="h1">{formData.recipeTitle}</Typography>
+              <Typography variant="h4">Description</Typography>
+              <List dense={true}>
+                {String(formData.description)
+                  .split("\n")
+                  .map((descriptionPart, index) => {
+                    return (
+                      <ListItemText key={index}>{descriptionPart}</ListItemText>
+                    );
+                  })}
+              </List>
+
+              <Typography variant="h4">Method</Typography>
               <ol className="method">
-                <li>
-                  Contrary to popular belief, Lorem Ipsum is not simply random
-                  text. It has roots in a piece of classical Latin literature
-                  from 45 BC, making it over 2000 years{" "}
-                </li>
-                <li>
-                  Contrary to popular belief, Lorem Ipsum is not simply random
-                  text. It has roots in a piece of classical Latin literature
-                  from 45 BC, making it over 2000 years old. Richard McClintock,
-                  a Latin professor at Hampden-Sydney
-                </li>
-                <li>
-                  Contrary to popular belief, Lorem Ipsum is not simply random
-                  text. It has roots in a piece of classical Latin literature
-                  from 45 BC, making it over 2000 years old. Hampden-Sydney
-                </li>
-                <li>
-                  Contrary to popular belief, Lorem Ipsum is not simply random
-                  text. It has roots in a piece of classical making it over 2000
-                  years old. Richard McClintock, a Latin professor at
-                  Hampden-Sydney
-                </li>
-                <li>
-                  Contrary to popular belief, Lorem Ipsum is not simply random
-                  text. It has roots in a piece of classical Latin literature
-                  from 45 BC, making it over 2000 years old. Richard McClintock,
-                  a Latin professor at Hampden-Sydney
-                </li>
-                <li>
-                  Contrary to popular belief, Loimply random text. It has roots
-                  in a piece of classical Latin literature from 45 BC, making it
-                  over 2000 years old. Richard McClintock, a Latin professor at
-                  Hampden-Sydney
-                </li>
-                <li>
-                  Contrary to popular belief, Lorem Ipsum is not simply random
-                  text. It has ure from 45 BC, making it over 2000 years old.
-                  Richard McClintock, a Latin professor at Hampden-Sydney
-                </li>
-                <li>
-                  Contrary to popular belief, Lorem Ipsum is not simply random
-                  text. It has roots in a piece of classical Latin literature
-                  from 45 BC, making it over 2000 years old. Richard McClintock,
-                  a Latin professor at Hampden-Sydney
-                </li>
-                <li>
-                  Contrary to popular belief, Lorem Ipsum is not simply random
-                  text. It has roots in a piece of classical Latin literature
-                  from 45 BC, making it over 2000 years old. Richard McClintock,
-                  a Latin professor at Hampden-Sydney
-                </li>
+                {String(formData.method)
+                  .split("\n")
+                  .map((methodPart, index) => {
+                    return <li key={index}>{methodPart}</li>;
+                  })}
               </ol>
             </Grid>
           </Grid>
@@ -182,7 +160,7 @@ const Recipe = (props) => {
 
   const simpleOutput = (
     <>
-      <h1>Recipe</h1>
+      <Typography variant="h1">Recipe</Typography>
       {!formData?.isError ? (
         <Link to={`/add_recipe/${recipeId}`}>Edit Recipe #{recipeId}</Link>
       ) : (

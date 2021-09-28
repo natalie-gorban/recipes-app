@@ -42,7 +42,7 @@ class UploadFile extends React.Component {
       : "Drag a new file";
 
     return (
-      <Container>
+      <Container className="upload-container">
         {imageName && imageUrl ? (
           <Image src={imageUrl} name={imageName} thumbnail />
         ) : (

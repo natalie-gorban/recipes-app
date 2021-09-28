@@ -21,8 +21,7 @@ class AppHeader extends React.Component {
     this.onChangeSearch = this.onChangeSearch.bind(this);
     this.onSubmitSearch = this.onSubmitSearch.bind(this);
 
-    this.props.setSearchText(this.props.location.state?.searchText || "") // initialize 'searchText' after redirection to '/'
-
+    this.props.setSearchText(this.props.location.state?.searchText || ""); // initialize 'searchText' after redirection to '/'
   }
 
   logOut() {
@@ -39,7 +38,7 @@ class AppHeader extends React.Component {
     const { history, searchText } = this.props;
     console.log("onSubmitSearch", this.state, this.props);
     if (window.location.pathname !== "/") {
-      history.push({pathname: "/", state: { searchText }}); // this way we send 'searchText' state to '/' path when user clicks 'Search'
+      history.push({ pathname: "/", state: { searchText } }); // this way we send 'searchText' state to '/' path when user clicks 'Search'
       window.location.reload();
     }
   }
