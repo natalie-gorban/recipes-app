@@ -1,18 +1,18 @@
 import React from "react";
-import { withStyles } from "@material-ui/core/styles";
-import ImageList from "@material-ui/core/ImageList";
-import ImageListItem from "@material-ui/core/ImageListItem";
-import ImageListItemBar from "@material-ui/core/ImageListItemBar";
-import ListSubheader from "@material-ui/core/ListSubheader";
-import IconButton from "@material-ui/core/IconButton";
-import InfoIcon from "@material-ui/icons/Info";
-// import itemData from './itemData';
 import { compose } from "redux";
 import { connect } from "react-redux";
+import { Link as RouterLink } from "react-router-dom";
+import { withStyles } from "@material-ui/core/styles";
+import {
+  ImageList,
+  ImageListItem,
+  ImageListItemBar,
+  ListSubheader,
+  IconButton,
+} from "@material-ui/core";
+import InfoIcon from "@material-ui/icons/Info";
 import { CDN_URL, DEFAULT_IMAGE_NAME } from "../../config";
 import { getAllRecipes } from "../../actions/recipe";
-import { Link } from "react-router-dom";
-
 import "./Home.css";
 
 const styles = (theme) => ({
@@ -52,7 +52,7 @@ class Home extends React.Component {
 
     return (
       <div className={classes.root}>
-        <ImageList rowHeight={250} rowWidth={250} className={classes.imageList}>
+        <ImageList rowHeight={250} className={classes.imageList}>
           <ImageListItem key="Subheader" cols={2} style={{ height: "auto" }}>
             <ListSubheader component="div">
               {searchText === ""
@@ -62,26 +62,28 @@ class Home extends React.Component {
           </ImageListItem>
 
           {filterRecipes.map((item) => (
-            <ImageListItem key={item.recipeId}>
-              <Link to={`/recipe/${item.recipeId}`}>
-                <img
-                  src={`${CDN_URL}/${item.imageName || DEFAULT_IMAGE_NAME}`}
-                  alt={item.recipeTitle}
-                />
+            <ImageListItem
+              key={item.recipeId}
+              component={RouterLink}
+              to={`/recipe/${item.recipeId}`}
+            >
+              <img
+                src={`${CDN_URL}/${item.imageName || DEFAULT_IMAGE_NAME}`}
+                alt={item.recipeTitle}
+              />
 
-                <ImageListItemBar
-                  title={item.recipeTitle}
-                  subtitle={<span>by: {item.userId}</span>}
-                  actionIcon={
-                    <IconButton
-                      aria-label={`info about ${item.recipeTitle}`}
-                      className={classes.icon}
-                    >
-                      <InfoIcon />
-                    </IconButton>
-                  }
-                />
-              </Link>
+              <ImageListItemBar
+                title={item.recipeTitle}
+                subtitle={<span>by: {item.userId}</span>}
+                actionIcon={
+                  <IconButton
+                    aria-label={`info about ${item.recipeTitle}`}
+                    className={classes.icon}
+                  >
+                    <InfoIcon />
+                  </IconButton>
+                }
+              />
             </ImageListItem>
           ))}
         </ImageList>
