@@ -55,22 +55,21 @@ const styles = (theme) => ({
     margin: "10px",
   },
 
-  description: {
+  tags: {
     width: "500px",
     marginTop: "10px !important",
     height: "100px",
   },
 
   ingredients: {
-    width: '500px',
+    width: "500px",
     // margin: '10px !important',
-    height: '100px',
+    height: "100px",
   },
 
   method: {
-    width: '500px',
-    marginTop: '60px !important',
-
+    width: "500px",
+    marginTop: "60px !important",
   },
   button: {
     textAlign: "left !important",
@@ -83,10 +82,9 @@ const styles = (theme) => ({
   },
 
   private: {
-    margin: '5px',
-  }
-})
-
+    margin: "5px",
+  },
+});
 
 class AddRecipe extends React.Component {
   constructor(props) {
@@ -96,7 +94,7 @@ class AddRecipe extends React.Component {
         prepTime: "",
         cookTime: "",
         recipeTitle: "",
-        description: "",
+        tags: "",
         ingredients: "",
         method: "",
         privateRecipe: true,
@@ -125,7 +123,7 @@ class AddRecipe extends React.Component {
     e.preventDefault();
     const { imageName, dispatch } = this.props;
     const { formData } = this.state;
-    dispatch(addRecipe(formData, imageName))
+    dispatch(addRecipe(formData, imageName));
   };
 
   cancel = (e) => {
@@ -136,7 +134,6 @@ class AddRecipe extends React.Component {
   };
 
   render() {
-
     const { classes, user: currentUser, recipeId } = this.props;
 
     if (!currentUser) {
@@ -191,13 +188,13 @@ class AddRecipe extends React.Component {
                     onChange={this.onChangeHandle}
                   />
                   <TextField
-                    name="description"
+                    name="tags"
                     label="Description"
                     multiline
                     rows={2}
                     variant="outlined"
-                    className={classes.description}
-                    value={this.state.formData.description}
+                    className={classes.tags}
+                    value={this.state.formData.tags}
                     onChange={this.onChangeHandle}
                   />
                   <TextField

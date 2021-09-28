@@ -12,25 +12,20 @@ import AddRecipe from "../add-recipe/add-recipe";
 import Profile from "../Profile/Profile";
 import { BrowserRouter, Route, Switch } from "react-router-dom";
 import { connect } from "react-redux";
-import { logout } from "../../actions/auth";
 
 class App extends React.Component {
   constructor(props) {
     super(props);
 
     this.state = {
-      data: null,
+      data: null, // state of - if backend server is online (just for user notification)
     };
   }
 
   componentDidMount() {
     this.callbackBackendAPI()
-      .then((res) => this.setState({ data: res.express }))
+      .then((response) => this.setState({ data: response.express }))
       .catch((err) => console.error(err));
-  }
-
-  logOut() {
-    this.props.dispatch(logout());
   }
 
   callbackBackendAPI = async () => {
@@ -54,12 +49,13 @@ class App extends React.Component {
           >
             <div className="container text-center">
               <Switch>
+                {/* Single Page Application */}
                 <Route exact path="/" component={Home} />
                 <Route path="/recipe/:recipeId" component={Recipe} />
                 <Route path="/profile" component={Profile} />
                 <Route path="/login" component={Login} />
                 <Route path="/signup" component={Signup} />
-                <Route path="/add_recipe" component={AddRecipe} />
+                <Route exact path="/add_recipe" component={AddRecipe} />
                 <Route path="/add_recipe/:recipeId" component={AddRecipe} />
               </Switch>
             </div>

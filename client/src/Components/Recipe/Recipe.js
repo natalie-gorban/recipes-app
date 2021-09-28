@@ -1,58 +1,63 @@
 import React, { useState, useEffect } from "react";
-import './Recipe.css'
-import { makeStyles, withStyles } from '@material-ui/core/styles';
-import { Grid, Typography, ButtonBase, Paper } from '@material-ui/core/';
+import "./Recipe.css";
+import { withStyles } from "@material-ui/core/styles";
+import {
+  Grid,
+  Typography,
+  ButtonBase,
+  Paper,
+  List,
+  ListItemText,
+  Chip,
+} from "@material-ui/core/";
 // import { Box, Rating, StarIcon } from '@mui/material/';
 import { useParams, Link } from "react-router-dom";
 import { connect } from "react-redux";
-import { compose } from 'redux'
+import { compose } from "redux";
 import http from "../../helpers/http-common";
-import { CDN_URL, API_URL } from '../../config'
+import { CDN_URL, API_URL, DEFAULT_IMAGE_NAME } from "../../config";
 const BASE_URL = `${API_URL}recipe/`;
 
 const styles = (theme) => ({
   root: {
     flexGrow: 1,
-    '& .MuiTextField-root': {
-    margin: theme.spacing(1),
-    // width: '50ch',
+    "& .MuiTextField-root": {
+      margin: theme.spacing(1),
+      // width: '50ch',
     },
   },
 
-
-
   paper: {
     padding: theme.spacing(2),
-    margin: 'auto',
-    marginTop: '20px',
-    width: '1100px',
-    height: 'auto',
+    margin: "auto",
+    marginTop: "20px",
+    width: "100%",
+    height: "auto",
   },
   image: {
-    width: '300px',
-    height: '300px',
+    width: "300px",
+    height: "300px",
   },
   img: {
-    marginTop: '20px',
-    display: 'block',
-    maxWidth: '80%',
-    maxHeight: '80%',
+    marginTop: "20px",
+    display: "block",
+    maxWidth: "80%",
+    maxHeight: "80%",
   },
 
   method: {
-    margin: '40px'
-  }
-
+    margin: "40px",
+  },
 });
 
 const Recipe = (props) => {
-  let { recipeId } = useParams()
+  let { recipeId } = useParams();
 
-  const [value, setValue] = React.useState(2)
-  const [hover, setHover] = React.useState(-1)
+  // const [value, setValue] = React.useState(2);
+  // const [hover, setHover] = React.useState(-1);
   const [formData, setFormData] = useState({});
 
-  const { classes } = props
+  const { classes } = props;
 
   useEffect(() => {
     http
@@ -78,9 +83,13 @@ const Recipe = (props) => {
       <Grid container spacing={2}>
         <Grid item>
           <ButtonBase className={classes.image}>
-            <img className={classes.img} alt="complex" src="https://images.pexels.com/photos/357573/pexels-photo-357573.jpeg?cs=srgb&dl=pexels-pixabay-357573.jpg&fm=jpg" />
+            <img
+              className={classes.img}
+              alt={`Recipe Id ${formData.recipeId}`}
+              src={`${CDN_URL}/${formData.imageName || DEFAULT_IMAGE_NAME}`}
+            />
           </ButtonBase>
-            {/* <Box
+          {/* <Box
               sx={{
                 width: 200,
                 display: 'flex',
@@ -103,52 +112,58 @@ const Recipe = (props) => {
                   <Box sx={{ ml: 2 }}>{labels[hover !== -1 ? hover : value]}</Box>
                 )}
               </Box> */}
-          <p>Recipe id: {recipeId}</p>
-          <h3>Ingredients:</h3>
-          <ul>
-            <li>Contrary to popular belief</li>
-            <li>Contrary to popular belief</li>
-            <li>Contrary to popular belief</li>
-            <li>Contrary to popular belief</li>
-          </ul>
+          <Typography variant="body2">
+            Recipe id: {formData.id} created by @{formData.username}
+          </Typography>
+          <Typography variant="h5">Ingredients</Typography>
+          <List dense={true}>
+            {String(formData.ingredients)
+              .split("\n")
+              .map((ingredient, index) => {
+                return <ListItemText key={index}>{ingredient}</ListItemText>;
+              })}
+          </List>
+          <Typography variant="h5">
+            Preparation time: {formData.prepTime}
+          </Typography>
+          <Typography variant="h5">
+            Cooking time: {formData.cookTime}
+          </Typography>
         </Grid>
 
         <Grid item xs={12} sm container>
           <Grid item xs container direction="column" spacing={2}>
             <Grid item xs>
-              <p>Recipe id: {recipeId}</p>
-              <h3>Method:</h3>
-              <ol className='method'>
-
-              <li>Contrary to popular belief, Lorem Ipsum is not simply random text. It has roots in a piece of classical Latin literature from 45 BC, making it over 2000 years </li>
-              <li>Contrary to popular belief, Lorem Ipsum is not simply random text. It has roots in a piece of classical Latin literature from 45 BC, making it over 2000 years old. Richard McClintock, a Latin professor at Hampden-Sydney</li>
-              <li>Contrary to popular belief, Lorem Ipsum is not simply random text. It has roots in a piece of classical Latin literature from 45 BC, making it over 2000 years old. Hampden-Sydney</li>
-              <li>Contrary to popular belief, Lorem Ipsum is not simply random text. It has roots in a piece of classical making it over 2000 years old. Richard McClintock, a Latin professor at Hampden-Sydney</li>
-              <li>Contrary to popular belief, Lorem Ipsum is not simply random text. It has roots in a piece of classical Latin literature from 45 BC, making it over 2000 years old. Richard McClintock, a Latin professor at Hampden-Sydney</li>
-              <li>Contrary to popular belief, Loimply random text. It has roots in a piece of classical Latin literature from 45 BC, making it over 2000 years old. Richard McClintock, a Latin professor at Hampden-Sydney</li>
-              <li>Contrary to popular belief, Lorem Ipsum is not simply random text. It has ure from 45 BC, making it over 2000 years old. Richard McClintock, a Latin professor at Hampden-Sydney</li>
-              <li>Contrary to popular belief, Lorem Ipsum is not simply random text. It has roots in a piece of classical Latin literature from 45 BC, making it over 2000 years old. Richard McClintock, a Latin professor at Hampden-Sydney</li>
-              <li>Contrary to popular belief, Lorem Ipsum is not simply random text. It has roots in a piece of classical Latin literature from 45 BC, making it over 2000 years old. Richard McClintock, a Latin professor at Hampden-Sydney</li>
+              <Typography variant="h1">{formData.recipeTitle}</Typography>
+              <Typography variant="h4">Method</Typography>
+              <ol className="method">
+                {String(formData.method)
+                  .split("\n")
+                  .map((methodPart, index) => {
+                    return <li key={index}>{methodPart}</li>;
+                  })}
               </ol>
+              {String(formData.tags)
+                .split(" ")
+                .map((tag, index) => {
+                  // https://mui.com/components/chips/
+                  return <Chip key={index} label={tag} variant="outlined" />;
+                })}
             </Grid>
           </Grid>
         </Grid>
       </Grid>
     </Paper>
-
-  )
+  );
 
   const simpleOutput = (
     <>
-      <h1>Recipe</h1>
-      {
-        !formData?.isError ? (
-          <Link to={`/add_recipe/${recipeId}`}>Edit Recipe #{recipeId}</Link>
+      <Typography variant="h1">Recipe</Typography>
+      {!formData?.isError ? (
+        <Link to={`/add_recipe/${recipeId}`}>Edit Recipe #{recipeId}</Link>
       ) : (
         <></>
-      )
-
-      }
+      )}
       <div>
         {Object.entries(formData).map((entry) => {
           return (
@@ -161,9 +176,8 @@ const Recipe = (props) => {
     </>
   );
 
-  return simpleOutput; // or output or simpleOutput
-
-}
+  return output; // or output or simpleOutput
+};
 
 function mapStateToProps(state) {
   const { user } = state.auth;
@@ -172,8 +186,4 @@ function mapStateToProps(state) {
   };
 }
 
-export default compose(
-  withStyles(styles),
-  connect(mapStateToProps),
-
-)(Recipe);
+export default compose(withStyles(styles), connect(mapStateToProps))(Recipe);

@@ -4,7 +4,7 @@ module.exports = (sequelize, Sequelize) => {
       type: Sequelize.STRING,
       allowNull: false,
     },
-    description: {
+    tags: {
       type: Sequelize.STRING,
       allowNull: false,
     },
@@ -32,6 +32,10 @@ module.exports = (sequelize, Sequelize) => {
       allowNull: false,
     },
     userId: {
+      type: Sequelize.STRING,
+      allowNull: false,
+    },
+    username: {
       type: Sequelize.STRING,
       allowNull: false,
     },
