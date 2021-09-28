@@ -115,6 +115,12 @@ const Recipe = (props) => {
           <Typography variant="body2">
             Recipe id: {formData.id} created by @{formData.username}
           </Typography>
+          <Typography variant="h5">
+            Preparation time: {formData.prepTime}
+          </Typography>
+          <Typography variant="h5">
+            Cooking time: {formData.cookTime}
+          </Typography>
           <Typography variant="h5">Ingredients</Typography>
           <List dense={true}>
             {String(formData.ingredients)
@@ -123,18 +129,18 @@ const Recipe = (props) => {
                 return <ListItemText key={index}>{ingredient}</ListItemText>;
               })}
           </List>
-          <Typography variant="h5">
-            Preparation time: {formData.prepTime}
-          </Typography>
-          <Typography variant="h5">
-            Cooking time: {formData.cookTime}
-          </Typography>
         </Grid>
 
         <Grid item xs={12} sm container>
           <Grid item xs container direction="column" spacing={2}>
             <Grid item xs>
               <Typography variant="h1">{formData.recipeTitle}</Typography>
+                {String(formData.tags)
+                  .split(" ")
+                  .map((tag, index) => {
+                    // https://mui.com/components/chips/
+                    return <Chip key={index} label={tag} variant="outlined" />;
+                  })}
               <Typography variant="h4">Method</Typography>
               <ol className="method">
                 {String(formData.method)
@@ -143,12 +149,6 @@ const Recipe = (props) => {
                     return <li key={index}>{methodPart}</li>;
                   })}
               </ol>
-              {String(formData.tags)
-                .split(" ")
-                .map((tag, index) => {
-                  // https://mui.com/components/chips/
-                  return <Chip key={index} label={tag} variant="outlined" />;
-                })}
             </Grid>
           </Grid>
         </Grid>

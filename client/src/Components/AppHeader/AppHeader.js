@@ -1,5 +1,4 @@
 import React from "react";
-import "./AppHeader.css";
 import {
   Navbar,
   Nav,
@@ -13,6 +12,8 @@ import { compose } from "redux";
 import { logout } from "../../actions/auth";
 import { withRouter } from "react-router-dom";
 import { setSearchText } from "../../actions/search";
+import { withStyles } from "@material-ui/core/styles";
+import { styles } from "./styles";
 
 class AppHeader extends React.Component {
   constructor(props) {
@@ -44,17 +45,17 @@ class AppHeader extends React.Component {
   }
 
   render() {
-    const { user: currentUser, searchText } = this.props;
+    const { user: currentUser, searchText, classes } = this.props;
     return (
       <header className="fixed-top d-block">
         <Navbar variant="dark" bg="dark" expand="lg">
-          <Navbar.Brand className="logo" href="/">
+          <Navbar.Brand className={classes.logo} href="/">
             Recipes
           </Navbar.Brand>
           <Navbar.Toggle aria-controls="navbarScroll" />
           <Navbar.Collapse id="navbarScroll">
             <Nav
-              className="me-auto mb-3 mb-lg-0 p-2"
+              className={`me-auto mb-3 mb-lg-0 p-2 ${classes.p2}`}
               style={{ maxHeight: "100px", marginLeft: "20px" }}
               navbarScroll
             >
@@ -69,7 +70,7 @@ class AppHeader extends React.Component {
               <Nav.Link href="#" disabled></Nav.Link>
             </Nav>
 
-            <Form className="d-flex p-2">
+            <Form className={`d-flex p-2 ${classes.p2}`}>
               <FormControl
                 type="search"
                 placeholder="Search"
@@ -87,7 +88,7 @@ class AppHeader extends React.Component {
               </Button>
 
               <Nav
-                className="mb-3 mb-lg-0 p-2"
+                className={`mb-3 mb-lg-0 p-2 ${classes.p2}`}
                 style={{ maxHeight: "50px" }}
                 navbarScroll
               >
@@ -131,5 +132,6 @@ function mapDispatchToProps(dispatch) {
 
 export default compose(
   withRouter,
+  withStyles(styles),
   connect(mapStateToProps, mapDispatchToProps)
 )(AppHeader);
