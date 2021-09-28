@@ -135,14 +135,6 @@ const Recipe = (props) => {
           <Grid item xs container direction="column" spacing={2}>
             <Grid item xs>
               <Typography variant="h1">{formData.recipeTitle}</Typography>
-              <Typography variant="h4">Description or tags</Typography>
-              {String(formData.description)
-                .split(" ")
-                .map((tag, index) => {
-                  // https://mui.com/components/chips/
-                  return <Chip key={index} label={tag} variant="outlined" />;
-                })}
-
               <Typography variant="h4">Method</Typography>
               <ol className="method">
                 {String(formData.method)
@@ -151,6 +143,12 @@ const Recipe = (props) => {
                     return <li key={index}>{methodPart}</li>;
                   })}
               </ol>
+              {String(formData.tags)
+                .split(" ")
+                .map((tag, index) => {
+                  // https://mui.com/components/chips/
+                  return <Chip key={index} label={tag} variant="outlined" />;
+                })}
             </Grid>
           </Grid>
         </Grid>
