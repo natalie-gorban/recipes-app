@@ -121,7 +121,6 @@ class Signup extends React.Component {
 
   render() {
     const { message } = this.props;
-
     return (
       <div className="col-md-12">
         <h1>Signup</h1>

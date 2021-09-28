@@ -37,7 +37,6 @@ class AppHeader extends React.Component {
   onSubmitSearch(e) {
     e.preventDefault();
     const { history, searchText } = this.props;
-    console.log("onSubmitSearch", this.state, this.props);
     if (window.location.pathname !== "/") {
       history.push({ pathname: "/", state: { searchText } }); // this way we send 'searchText' state to '/' path when user clicks 'Search'
       window.location.reload();
@@ -70,43 +69,43 @@ class AppHeader extends React.Component {
               <Nav.Link href="#" disabled></Nav.Link>
             </Nav>
 
-            <Form className={`d-flex p-2 ${classes.p2}`}>
-              <FormControl
-                type="search"
-                placeholder="Search"
-                className="me-2"
-                aria-label="Search"
-                value={searchText}
-                onChange={this.onChangeSearch}
-              />
-              <Button
-                variant="outline-success"
-                onClick={this.onSubmitSearch}
-                type="submit"
-              >
-                Search
-              </Button>
+            <Nav
+              className={`mb-3 mb-lg-0 p-2 ${classes.p2}`}
+              style={{ maxHeight: "50px" }}
+              navbarScroll
+            >
+              <Form className={`d-flex p-2 ${classes.p2}`}>
+                <FormControl
+                  type="search"
+                  placeholder="Search"
+                  className="me-2"
+                  aria-label="Search"
+                  value={searchText}
+                  onChange={this.onChangeSearch}
+                />
+                <Button
+                  variant="outline-success"
+                  onClick={this.onSubmitSearch}
+                  type="submit"
+                >
+                  Search
+                </Button>
+              </Form>
 
-              <Nav
-                className={`mb-3 mb-lg-0 p-2 ${classes.p2}`}
-                style={{ maxHeight: "50px" }}
-                navbarScroll
-              >
-                {!currentUser ? (
-                  <>
-                    <Nav.Link href="/signup">Signup</Nav.Link>
-                    <Nav.Link href="/login">Login</Nav.Link>
-                  </>
-                ) : (
-                  <>
-                    <Nav.Link href="/profile">Profile</Nav.Link>
-                    <Nav.Link href="/login" onClick={this.logOut}>
-                      Logout
-                    </Nav.Link>
-                  </>
-                )}
-              </Nav>
-            </Form>
+              {!currentUser ? (
+                <>
+                  <Nav.Link href="/signup">Signup</Nav.Link>
+                  <Nav.Link href="/login">Login</Nav.Link>
+                </>
+              ) : (
+                <>
+                  <Nav.Link href="/profile">Profile</Nav.Link>
+                  <Nav.Link href="/login" onClick={this.logOut}>
+                    Logout
+                  </Nav.Link>
+                </>
+              )}
+            </Nav>
           </Navbar.Collapse>
         </Navbar>
       </header>
