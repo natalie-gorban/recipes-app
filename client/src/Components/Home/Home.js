@@ -74,7 +74,7 @@ class Home extends React.Component {
 
               <ImageListItemBar
                 title={item.recipeTitle}
-                subtitle={<span>by: {item.userId}</span>}
+                subtitle={<span>by: {item.username}</span>}
                 actionIcon={
                   <IconButton
                     aria-label={`info about ${item.recipeTitle}`}
