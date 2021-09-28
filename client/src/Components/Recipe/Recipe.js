@@ -111,7 +111,7 @@ const Recipe = (props) => {
                   <Box sx={{ ml: 2 }}>{labels[hover !== -1 ? hover : value]}</Box>
                 )}
               </Box> */}
-          <Typography variant="body2">Recipe id: {formData.id}</Typography>
+          <Typography variant="body2">Recipe id: {formData.id} created by @{formData.username}</Typography>
           <Typography variant="h5">Ingredients</Typography>
           <List dense={true}>
             {String(formData.ingredients)

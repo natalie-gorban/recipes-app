@@ -1,5 +1,6 @@
 const db = require("../models");
 const Recipe = db.recipe;
+const User = db.user;
 
 exports.addRecipe = (req, res) => {
   // Save Recipe to Database
@@ -8,34 +9,47 @@ exports.addRecipe = (req, res) => {
     ...req.body,
     userId: req.userId, // Provided by middleware/authJwt added from routes/recipe.routes
   };
-  if (req.body.recipeId) {
-    fields.id = req.body.recipeId;
-  }
-  console.log("controller addRecipe fields", fields);
+  User.findOne({
+    where: {
+      id: req.userId,
+    },
+  }).then((user) => {
+    fields.username = user.username
+    if (req.body.recipeId) {
+      fields.id = req.body.recipeId;
+    }
+    console.log("controller addRecipe fields", fields);
 
-  Recipe.upsert(fields, {
-    returning: true,
-  })
-    .then((recipe, isNewRecord) => {
-      let dirtyWorkaroundRecipeId = recipe[0].dataValues.id; // due to known bug in sequelize, there is no possibility to get recipe.id after upsert
-      if (isNewRecord) {
-        message = `Existing recipe with id [${dirtyWorkaroundRecipeId}] has been edited successfully!`;
-      } else {
-        message = `New recipe with id [${dirtyWorkaroundRecipeId}] has been added successfully!`;
-      }
-      console.log("controller addRecipe message", message);
-      res.send({
-        message,
-        recipeId: dirtyWorkaroundRecipeId,
-      });
+    Recipe.upsert(fields, {
+      returning: true,
     })
-    .catch((err) => {
-      message = err.message;
-      console.log("controller addRecipe message", message);
-      res.status(500).send({
-        message,
+      .then((recipe, isNewRecord) => {
+        let dirtyWorkaroundRecipeId = recipe[0].dataValues.id; // due to known bug in sequelize, there is no possibility to get recipe.id after upsert
+        if (isNewRecord) {
+          message = `Existing recipe with id [${dirtyWorkaroundRecipeId}] has been edited successfully!`;
+        } else {
+          message = `New recipe with id [${dirtyWorkaroundRecipeId}] has been added successfully!`;
+        }
+        console.log("controller addRecipe message", message);
+        res.send({
+          message,
+          recipeId: dirtyWorkaroundRecipeId,
+        });
+      })
+      .catch((err) => {
+        message = err.message;
+        console.log("controller addRecipe message", message);
+        res.status(500).send({
+          message,
+        });
       });
-    });
+  }).catch((err) => {
+    message = err.message;
+    console.log("controller addRecipe message", message);
+    res.status(500).send({
+      message
+    })
+  });
 };
 
 exports.deleteRecipe = (req, res) => {
@@ -105,7 +119,7 @@ exports.getRecipe = (req, res) => {
 exports.getAllRecipes = (req, res) => {
   let message = "Message not initialized";
   Recipe.findAll({
-    attributes: [["id", "recipeId"], "recipeTitle", "imageName", "userId"],
+    attributes: [["id", "recipeId"], "recipeTitle", "imageName", "username"],
   })
     .then((recipes) => {
       let output = [];
