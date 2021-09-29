@@ -40,13 +40,30 @@ const styles = (theme) => ({
   },
   img: {
     marginTop: "20px",
-    display: "block",
-    maxWidth: "80%",
-    maxHeight: "80%",
+    // display: "block",
+    maxWidth: "250px !important",
+    maxHeight: "250px",
+    width: "250px",
   },
 
   method: {
-    margin: "40px",
+    textAlign: "left",
+  },
+  titleMethod: {
+    textAlign: "left",
+  },
+  titleIngr: {
+    textAlign: "left",
+    marginLeft: "30px",
+  },
+
+  Ingredients: {
+    font: "20px !important",
+    textAlign: "left",
+    marginLeft: "30px",
+  },
+  MuiTypography: {
+    font: "20px !important",
   },
 });
 
@@ -89,44 +106,28 @@ const Recipe = (props) => {
               src={`${CDN_URL}/${formData.imageName || DEFAULT_IMAGE_NAME}`}
             />
           </ButtonBase>
-          {/* <Box
-              sx={{
-                width: 200,
-                display: 'flex',
-                alignItems:'center',
-              }}
-              >
-                <Rating
-                className='hover-feedback'
-                value={value}
-                precision={0.5}
-                onChange={(event, vewValue) => {
-                  setValue(newValue);
-                }}
-                onChangeActive={(event, newHower) => {
-                  setHover(newHover);
-                }}
-                emptyIcon={<StarIcon style={{ opacity:0.5 }} fontSize='inherit' />}
-                />
-                {value !== null && (
-                  <Box sx={{ ml: 2 }}>{labels[hover !== -1 ? hover : value]}</Box>
-                )}
-              </Box> */}
+          
           <Typography variant="body2">
             Recipe id: {formData.id} created by @{formData.username}
           </Typography>
-          <Typography variant="h5">
+          <Typography className={classes.time} variant="h7">
             Preparation time: {formData.prepTime}
-          </Typography>
-          <Typography variant="h5">
+          </Typography><br/>
+          <Typography className={classes.time} variant="h7">
             Cooking time: {formData.cookTime}
           </Typography>
-          <Typography variant="h5">Ingredients</Typography>
+          <Typography className={classes.titleIngr} variant="h4">
+            Ingredients:
+          </Typography>
           <List dense={true}>
             {String(formData.ingredients)
               .split("\n")
               .map((ingredient, index) => {
-                return <ListItemText key={index}>{ingredient}</ListItemText>;
+                return (
+                  <ListItemText className={classes.Ingredients} key={index}>
+                    {ingredient}
+                  </ListItemText>
+                );
               })}
           </List>
         </Grid>
@@ -135,18 +136,26 @@ const Recipe = (props) => {
           <Grid item xs container direction="column" spacing={2}>
             <Grid item xs>
               <Typography variant="h1">{formData.recipeTitle}</Typography>
-                {String(formData.tags)
-                  .split(" ")
-                  .map((tag, index) => {
-                    // https://mui.com/components/chips/
-                    return <Chip key={index} label={tag} variant="outlined" />;
-                  })}
-              <Typography variant="h4">Method</Typography>
+              {String(formData.tags)
+                .split(" ")
+                .map((tag, index) => {
+                  // https://mui.com/components/chips/
+                  return <Chip key={index} label={tag} variant="outlined" />;
+                })}
+              <Typography className={classes.titleMethod} variant="h4">
+                Method:
+              </Typography>
               <ol className="method">
                 {String(formData.method)
                   .split("\n")
                   .map((methodPart, index) => {
-                    return <li key={index}>{methodPart}</li>;
+                    if (methodPart)
+                      return (
+                        <li className={classes.method} key={index}>
+                          {methodPart}
+                        </li>
+                      );
+                    else return <br />;
                   })}
               </ol>
             </Grid>

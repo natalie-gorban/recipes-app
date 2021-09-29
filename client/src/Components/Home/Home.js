@@ -31,7 +31,7 @@ class Home extends React.Component {
 
     return (
       <div className={classes.root}>
-        <ImageList rowHeight={250} className={classes.imageList} gap={10}>
+        <ImageList rowHeight={250} className={classes.imageList} gap={20}>
           <ImageListItem key="Subheader" cols={2} style={{ height: "auto" }}>
             <ListSubheader className={classes.listSubheader} component="div">
               <Typography variant="h1">

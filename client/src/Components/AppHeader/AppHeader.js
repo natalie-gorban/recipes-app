@@ -59,12 +59,16 @@ class AppHeader extends React.Component {
               navbarScroll
             >
               <Nav.Link href="/">Home</Nav.Link>
-              <Nav.Link href="/add_recipe">Add Recipe</Nav.Link>
-              <NavDropdown title="DropDown" id="navbarScrollingDropdown">
-                <NavDropdown.Item href="/recipe/1">Recipe 1</NavDropdown.Item>
-                <NavDropdown.Item href="/recipe/2">Recipe 2</NavDropdown.Item>
+              <Nav.Link href="/add_recipe" style={{ paddingLeft: "30px" }}>Add Recipe
+              </Nav.Link>
+              <NavDropdown title="DropDown" id="navbarScrollingDropdown" style={{ paddingLeft: "30px" }}>
+                <NavDropdown.Item href="/recipe/1">Breakfast</NavDropdown.Item>
+                <NavDropdown.Item href="/recipe/2">Lunch</NavDropdown.Item>
+                <NavDropdown.Item href="/recipe/2">Dinner</NavDropdown.Item>
                 <NavDropdown.Divider />
-                <NavDropdown.Item href="/recipe/3">Recipe 3</NavDropdown.Item>
+                <NavDropdown.Item href="/recipe/3">Beverages</NavDropdown.Item>
+                <NavDropdown.Item href="/recipe/3">Sweets</NavDropdown.Item>
+                <NavDropdown.Item href="/recipe/3">Salad</NavDropdown.Item>
               </NavDropdown>
               <Nav.Link href="#" disabled></Nav.Link>
             </Nav>
@@ -77,6 +81,7 @@ class AppHeader extends React.Component {
               <Form className={`d-flex p-2 ${classes.p2}`}>
                 <FormControl
                   type="search"
+                  style={{ height: "40px" }}
                   placeholder="Search"
                   className="me-2"
                   aria-label="Search"
@@ -85,6 +90,7 @@ class AppHeader extends React.Component {
                 />
                 <Button
                   variant="outline-success"
+                  style={{ height: "40px" }}
                   onClick={this.onSubmitSearch}
                   type="submit"
                 >

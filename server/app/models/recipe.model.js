@@ -9,7 +9,7 @@ module.exports = (sequelize, Sequelize) => {
       allowNull: false,
     },
     ingredients: {
-      type: Sequelize.STRING,
+      type: Sequelize.TEXT,
       allowNull: false,
     },
     method: {

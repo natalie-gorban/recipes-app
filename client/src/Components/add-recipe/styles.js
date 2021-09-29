@@ -3,13 +3,13 @@ export const styles = (theme) => ({
     flexGrow: 1,
     "& .MuiTextField-root": {
       margin: theme.spacing(1),
-      // width: '50ch',
+      // height: "10px",
     },
   },
   paper: {
     padding: theme.spacing(2),
     margin: "auto",
-    marginTop: "20px",
+    // marginTop: "20px",
     width: 1000,
     height: 800,
     // maxWidth: 1000,
@@ -29,8 +29,9 @@ export const styles = (theme) => ({
   },
 
   time: {
-    width: "80px",
-    margin: "50px 20px",
+    width: "90px",
+    height: "20px",
+    margin: "70px 20px",
     fontSize: "3mm",
   },
 

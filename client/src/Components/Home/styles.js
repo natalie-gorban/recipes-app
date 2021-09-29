@@ -6,8 +6,9 @@ export const styles = (theme) => ({
     overflow: "hidden",
   },
   imageList: {
+    // padding: "20px",
     width: 1000,
-    height: 950,
+    // height: 950,
   },
   imageListItem: {
     margin: "auto",
@@ -16,10 +17,10 @@ export const styles = (theme) => ({
     color: "rgba(255, 255, 255, 0.54)",
   },
 
-  img: {
-    width: 80,
-    height: 100,
-  },
+  // MuiImageListItem: {
+  //   width: "200px",
+  //   height: "300px !important",
+  // },
   listSubheader: {
     fontSize: "40px !important",
     textAlign: "left !important",
