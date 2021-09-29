@@ -54,10 +54,8 @@ class Login extends React.Component {
 
     this.form.validateAll();
 
-    const { dispatch } = this.props;
-
     if (this.checkBtn.context._errors.length === 0) {
-      dispatch(login(this.state.username, this.state.password))
+      this.props.dispatch(login(this.state.username, this.state.password))
         .catch(() => {
           this.setState({
             loading: false

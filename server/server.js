@@ -10,6 +10,7 @@ const port = process.env.PORT || 5000;
 
 app.listen(port, () => console.log(`Listening on port ${port}`));
 
+ // initialization of DB models
 if (process.env.FORCE_RESYNC === "true") {
   console.log(
     `start force to resync DB due FORCE_RESYNC=[${process.env.FORCE_RESYNC}]`

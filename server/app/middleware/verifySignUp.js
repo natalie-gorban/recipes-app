@@ -2,7 +2,7 @@ const db = require("../models");
 const User = db.user;
 
 checkDuplicateUsernameOrEmail = (req, res, next) => {
-  // Username
+  // if Username already exists
   let message = "Message not initialized";
   User.findOne({
     where: {
@@ -18,7 +18,7 @@ checkDuplicateUsernameOrEmail = (req, res, next) => {
       return;
     }
 
-    // Email
+    // if Email already used
     User.findOne({
       where: {
         email: req.body.email,

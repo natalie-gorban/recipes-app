@@ -31,7 +31,7 @@ module.exports = (sequelize, Sequelize) => {
       type: Sequelize.BOOLEAN,
       allowNull: false,
     },
-    userId: {
+    userId: { // we do not use foreign keys due to Planetscale issues with foreign keys (because Planetscale use serverless MySQL - Vitess)
       type: Sequelize.STRING,
       allowNull: false,
     },
