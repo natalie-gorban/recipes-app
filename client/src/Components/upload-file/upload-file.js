@@ -5,7 +5,7 @@ import { connect } from "react-redux";
 import "react-dropzone-uploader/dist/styles.css";
 import Dropzone from "react-dropzone-uploader";
 import { Image, Container } from "react-bootstrap";
-import { CDN_URL } from "../../config";
+import { CDN_URL, DEFAULT_IMAGE_NAME } from "../../config";
 
 class UploadFile extends React.Component {
   constructor(props) {
@@ -47,7 +47,7 @@ class UploadFile extends React.Component {
           <Image src={imageUrl} name={imageName} thumbnail />
         ) : (
           <Image
-            src={`${CDN_URL}/static/burger.jpg`}
+            src={`${CDN_URL}/${DEFAULT_IMAGE_NAME}`}
             name="no image"
             thumbnail
           />
